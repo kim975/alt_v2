@@ -25,9 +25,9 @@
       <!-- <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property> -->
       <!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"></property> -->
       <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"></property>
+      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
       <property name="username" value="alt"></property>
-      <property name="password" value="oracle4U"></property>
+      <property name="password" value="1q2w3e4r@@"></property>
    </bean>
 
    <!-- HikariCP configuration -->
