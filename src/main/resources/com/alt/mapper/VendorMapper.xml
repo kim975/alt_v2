@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.alt.mapper.VendorMapper">
+	
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 정보 출력 -->
+	<select id="listVendor" resultType="com.alt.domain.VendorVO">
+	<![CDATA[
+		select * from alt.vendor where vid = #{vid} 
+	]]>
+	</select>
+	
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 정보 수정 (비밀번호) -->
+	<update id="modifyPasswordVendor">
+	<![CDATA[
+		update alt.vendor set 
+		vpassword = #{vpassword}
+		where vid = #{vid} 
+	]]>
+	</update>
+	
+	
+	<!-- 업체 계정 join -->
+	<insert id="VendorRegister" parameterType="com.alt.domain.VendorVO">
+		insert into alt.vendor 
+		values (#{vid} , #{vpassword} , #{vname} , #{vregisterNo} , #{vphone} , #{vaddress} , default , #{vinfo} , default , default , default , default) 
+	</insert>    
+	
+	<!-- 업체 계정 권한 join  -->
+	<insert id="RoleRegister" parameterType="com.alt.domain.VendorAuthVO">
+		insert into alt.vendorauth 
+		values (#{vid}, 'ROLE_VENDOR') 
+	</insert>  
+	
+	<!-- 업체 ID 중복 체크 -->	
+ 	<select id="vendoridCheck" parameterType="com.alt.domain.VendorVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.vendor 	
+		WHERE VID=#{VID}
+     </select>
+    
+	<!-- 업체 이름 중복 체크 -->	
+ 	<select id="vendorName" parameterType="com.alt.domain.VendorVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.vendor 	
+		WHERE VNAME=#{VNAME}
+     </select>
+
+     <!-- 업체 사업자 번호 중복  확인 -->	
+ 	<select id="vendorNoCheck" parameterType="com.alt.domain.VendorVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.vendor 	
+		WHERE VREGISTERNO=#{VREGISTERNO}
+     </select>
+     
+
+     <!--업체 전화번호 중복 체크 -->	
+ 	<select id="phoneCheck" parameterType="com.alt.domain.VendorVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.vendor 	
+		WHERE vphone=#{vphone}
+     </select>
+	
+	<!-- ////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!-- 지영 -->
+	<!-- 마이페이지-업체 정보 출력 -->
+	<select id="infoListVendor" resultType="com.alt.domain.VendorVO">
+	<![CDATA[
+		SELECT * FROM alt.vendor WHERE vid=#{vid}
+	]]>
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 마이페이지-업체 정보 수정 -->
+	<update id="modifyVendor">
+	<![CDATA[
+		UPDATE alt.vendor 
+		SET vpassword=#{vpassword}, vname=#{vname}, vregisterNo=#{vregisterNo}, vphone=#{vphone}, vaddress=#{vaddress}, vinfo=#{vinfo} 
+		WHERE vid = #{vid}
+	]]>
+	</update>
+	
+	<!-- 지영 -->
+	<!-- 마이페이지-업체 탈퇴 -->
+	<update id="deleteVendor">
+		<![CDATA[
+			UPDATE alt.vendor SET vdelete = 'Y' 
+			WHERE vid = #{vid} AND vpassword = #{vpassword}
+		]]>
+	</update>
+	
+	<!-- 마이페이지/회원 탈퇴/권한 삭제 -->
+	<delete id="deleteVendorAuth">
+	<![CDATA[
+		delete from alt.vendorauth
+		where vid = #{vid}  
+	]]>
+	</delete>
+
+<!-- 지영 -->
+	<!-- 마이페이지-업체 판매 리스트 -->
+	<select id="saleListVendor" resultType="com.alt.domain.SaleBoardVO">
+  	<![CDATA[
+  		SELECT * FROM alt.saleboard WHERE vid=#{vid} ORDER BY swriteDate DESC
+  	]]>
+  	</select>
+	
+<!-- 지영 -->
+	<!-- 마이페이지-업체 주문 리스트 -->
+<!-- 	<select id="ordListVendor" resultType="com.alt.domain.OrdProductVO">
+  	<![CDATA[
+  		SELECT o.*, s.vid
+		FROM alt.ordproduct o
+		INNER JOIN alt.saleboard s ON o.sno=s.sno
+		WHERE vid = #{vid}
+		ORDER BY odate DESC
+  	]]>
+  	</select> -->
+  	
+  	<select id="ordListVendor" resultType="Map">
+  	<![CDATA[
+  		SELECT o.*, ord.*, s.*
+		FROM alt.ordproduct o
+		INNER JOIN alt.saleboard s ON o.sno=s.sno
+		INNER JOIN alt.ord ord ON ord.ocode = o.ocode
+		WHERE vid = #{vid}
+		ORDER BY odate DESC
+  	]]>
+  	</select>
+  	
+<!-- 지영 -->
+	<!-- 마이페이지-업체 주문 결제확인 -->
+	<update id="ordCheckVendor">
+  	<![CDATA[
+		UPDATE alt.ordproduct SET oppay = 'Y' 
+		WHERE ocode=#{ocode} 
+  	]]>
+  	</update>
+  	
+<!-- 지영 -->
+	<!-- 마이페이지-업체 주문 결제 검색 -->
+	<select id="ordSearchVendor" resultType="Map">
+  	<![CDATA[
+  		SELECT o.*, ord.*, s.*
+		FROM alt.ordproduct o
+		INNER JOIN alt.saleboard s ON o.sno=s.sno
+		INNER JOIN alt.ord ord ON ord.ocode = o.ocode
+  	]]>
+		<if test="type!=null and type!=''">
+			<where>
+				<choose>
+					<when test="type == 'Y'.toString()">
+						opay = 'Y' and
+					</when>
+					<when test="type == 'N'.toString()">
+						opay = 'N' and
+					</when>
+				</choose>
+				vid = #{vid}
+			</where>
+		</if>
+	<![CDATA[
+		ORDER BY odate DESC
+ 	]]>
+  	</select>
+  	
+  	  	<!-- 성환 -->
+    <!-- 마이페이지-주문 상세 목록 -->
+    <!--  여기에 inner join 넣기 -->
+    <select id="listOrdProduct" resultType="Map">
+  	<![CDATA[
+  		SELECT p.ordProductCode, p.oamount, p.oprice, p.oppay, b.*, o.*
+  		from alt.ordProduct p full outer join alt.saleboard b
+  		on p.sno = b.sno full outer join alt.ord o on p.ocode = o.ocode
+		WHERE o.ocode = #{ocode} 
+    ]]>
+    </select>
+	
+	<!-- 시큐리티 관련 코드 -->
+ 	<resultMap type="com.alt.domain.MemberVO" id="MemberMap">
+		<id property="id" column="id"/>
+		<result property="cid" column="cid"/>
+		<result property="cpassword" column="cpassword"/>
+		<result property="cname" column="cname"/>
+		<result property="cnick" column="cnick"/>
+		<result property="cphone" column="cphone"/>
+		<result property="caddress" column="caddress"/>
+		<result property="cjoinDate" column="cjoinDate"/>
+		<result property="creport" column="creport"/>
+		<result property="cdelete" column="cdelete"/>
+		<result property="cgrade" column="cgrade"/>
+		<result property="enable" column="enable"/>
+		
+		<result property="vid" column="vid"/>
+		<result property="vpassword" column="vpassword"/>
+		<result property="vname" column="vname"/>
+		<result property="vregisterNo" column="vregisterNo"/>
+		<result property="vphone" column="vphone"/>
+		<result property="vaddress" column="vaddress"/>
+		<result property="vjoinDate" column="vjoinDate"/>
+		<result property="vinfo" column="vinfo"/>
+		<result property="vreport" column="vreport"/>
+		<result property="vdelete" column="vdelete"/>
+		<result property="vgrade" column="vgrade"/>
+		<collection property="ClientAuthList" resultMap="ClientAuthMap"></collection>
+		<collection property="vendorAuthList" resultMap="VendorAuthMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.alt.domain.ClientAuthVO" id="ClientAuthMap">
+		<result property="cid" column="cid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<resultMap type="com.alt.domain.VendorAuthVO" id="VendorAuthMap">
+		<result property="vid" column="vid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="read" resultMap="MemberMap">
+	<!-- 교재 -->
+	<![CDATA[
+		select v.VID, VPASSWORD, VNAME, VREGISTERNO, VPHONE, VADDRESS, VJOINDATE, VINFO, VREPORT, VDELETE, VGRADE, enable, authority
+		from alt.vendor v LEFT OUTER JOIN alt.vendorauth auth on 
+		v.vid = auth.vid 
+		where v.vid = #{id} 
+	]]>
+	</select>
+
+</mapper>

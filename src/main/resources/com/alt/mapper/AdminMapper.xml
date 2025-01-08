@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.alt.mapper.AdminMapper">
+	 <!-- client -->
+ <sql id="criteria">   
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>  <!--  (I: cid, T: cjoinDate, A:caddress) -->
+							<when test="type == 'I'.toString()">
+								cid like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								cjoinDate like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'A'.toString()">
+								caddress like '%'||#{keyword}||'%'
+							</when>
+					 </choose>
+				 </trim>
+			</foreach>
+	  </trim>
+	 </sql> 
+	
+	<!-- 정민 -->
+	<!--  회원정보 리스트 페이징  -->
+	<select id="clientListPaging" resultType="com.alt.domain.ClientVO">
+	   <![CDATA[
+	      SELECT
+	      	cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (client PK_CLIENT) */ 
+	      	rownum rn, cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade 
+	      FROM   
+	      	alt.client  
+	      WHERE
+	  ]]>
+	  
+	  <include refid="criteria"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} )
+		where rn > ( #{pageNum} - 1 ) * #{amount} 
+	  ]]>
+	</select>  
+	
+	<!-- 정민 --> 
+	<!-- 회원 갯수 -->
+	<select id="getTotaleCountC" resultType="int">
+		select Count(*) from alt.client
+		where 
+		
+		<include refid="criteria"></include> 
+		
+		creport >= 0
+
+	</select>
+	
+	 <!--   정민   client 삭제 -->
+   <delete id="clientDelete" parameterType="String" >
+	 	delete from alt.client  where cid=#{cid}
+	 </delete>  
+	  
+	  <!--   정민   client 업데이트 -->
+	  <update id="clientUpdate">
+	  		update alt.client
+	  		set  cdelete='N' where  cid=#{cid}
+	  </update>
+	 
+	 <!-- 정민   client Y 여부 페이징 -->
+	 <select id="clientListYPaging" resultType="com.alt.domain.ClientVO">
+	   <![CDATA[
+	    SELECT
+	      	cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade
+	    FROM  ( SELECT /*+ INDEX_DESC (client PK_CLIENT) */ 
+	      			rownum rn, cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade 
+	      		FROM alt.client  
+	      		WHERE  
+	  ]]>
+	  
+	  <include refid="criteria"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} and cdelete = 'Y' )  
+		where rn >= ( #{pageNum} - #{amount} ) * #{amount}
+	  ]]>
+	</select> 
+	
+	<!-- 정민 -->
+	<!-- client Y  갯수 -->
+	<select id="getTotaleCountYC" resultType="int">
+		select Count(*) from alt.client
+		where 	
+		<include refid="criteria"></include> 
+		cdelete = 'Y'
+	</select>
+	 
+	  <!--  정민    client Y 삭제 -->
+     <delete id="clientDeleteY" parameterType="String" >
+	 	delete from alt.client  where cid=#{cid} 
+	 </delete>  
+	 
+	  <!-- 정민   client R 여부 페이징 -->
+	 <select id="clientListRPaging" resultType="com.alt.domain.ClientVO">
+	   <![CDATA[
+	    SELECT
+	      	cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (client PK_CLIENT) */ 
+	      	rownum rn, cid, cpassword ,cname ,cnick ,cphone ,caddress ,cjoinDate ,creport ,cdelete ,cgrade 
+	      FROM   
+	      	alt.client  
+	      WHERE 
+	  ]]>
+	  
+	  <include refid="criteria"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} AND creport >=1  )
+		where rn > ( #{pageNum} - 1 ) * #{amount} 
+	  ]]>
+	</select> 
+	
+	<!-- 정민 -->
+	<!-- client R  갯수 -->
+	<select id="getTotaleCountRC" resultType="int">
+		select Count(*) from alt.client
+		where 
+		
+		<include refid="criteria"></include> 
+		
+		creport >= 1
+
+	</select>
+	 
+	  <!--  정민    client R 삭제 -->
+     <delete id="clientDeleteR" parameterType="String" >
+	 	delete from alt.client  where cid=#{cid} 
+	 </delete>  
+	  
+	  
+	 <!-- vendor -->
+	   <sql id="criteriaV">   
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>  <!--  (I: vid, T: vjoinDate, A:vaddress) -->
+							<when test="type == 'I'.toString()">
+								vid like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								vjoinDate like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'A'.toString()">
+								vaddress like '%'||#{keyword}||'%'
+							</when>
+					 </choose>
+				 </trim>
+			</foreach>
+	  </trim>
+	 </sql> 
+	  
+	   <!--  정민    vendor 리스트  페이징-->
+	  	<select id="vendorListPaging" resultType="com.alt.domain.VendorVO">
+	   <![CDATA[
+	      SELECT
+	      	vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (vendor PK_vendor) */ 
+	      	rownum rn, vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM   
+	      	alt.vendor  
+	      WHERE
+	  ]]>
+	  
+	  <include refid="criteriaV"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} )
+		where rn > ( #{pageNum} - 1 ) * #{amount} 
+	  ]]>
+	</select>  
+	
+	<!-- 정민 -->
+	<!-- vendor 갯수 -->
+	<select id="getTotaleCountV" resultType="int">
+		select Count(*) from alt.vendor  
+		where 
+		
+		<include refid="criteriaV"></include> 
+		
+		vregisterNo  >0
+
+	</select>
+	   
+	 <!--  정민    vendor 삭제 -->
+	 <delete id="vendorDelete" parameterType="String">
+	 	delete from alt.vendor  where vid=#{vid}   
+	 </delete>
+	 
+	   <!--  정민    vendor 업데이트 -->
+	  <update id="vendorUpdate">
+	  		update alt.vendor
+	  		set  vdelete='N' where  vid=#{vid}
+	  </update>
+	  
+	  <!--  정민    vendor Y 여부  리스트-->
+	 
+	 <select id="vendorListYPaging" resultType="com.alt.domain.VendorVO">
+	   <![CDATA[
+	    SELECT
+	      	vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (vendor PK_vendor) */ 
+	      	rownum rn, vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM   
+	      	alt.vendor
+	      WHERE 
+	  ]]>
+	  
+	  <include refid="criteriaV"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} and vdelete = 'Y' )  
+		where rn >= ( #{pageNum} - #{amount} ) * #{amount}
+	  ]]>
+	</select>
+   <!-- 정민 -->
+	<!-- vendor Y  갯수 -->
+	<select id="getTotaleCountYV" resultType="int">
+		select Count(*) from alt.vendor
+		where 
+		
+		<include refid="criteriaV"></include> 
+		
+		vdelete = 'Y'
+
+	</select>
+	 
+	 
+	   <!--  정민    vendor Y 삭제 -->
+     <delete id="vendortDeleteY" parameterType="String" >
+	 	delete from alt.vendor    where vid=#{vid}   
+	 </delete> 
+	 
+	 <!--   정민   vendor R 여부 -->
+	  <select id="getVendorListR" resultType="com.alt.domain.VendorVO">
+	 	select * from alt.vendor where vreport > 0 
+	 </select>
+	 
+	  <select id="vendorListRPaging" resultType="com.alt.domain.VendorVO">
+	   <![CDATA[
+	    SELECT
+	      	vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (vendor PK_vendor) */ 
+	      	rownum rn, vid, vpassword ,vname ,vregisterNo ,vphone ,vaddress ,vjoinDate ,vinfo, vreport ,vdelete ,vgrade
+	      FROM   
+	      	alt.vendor
+	      WHERE 
+	  ]]>
+	  
+	  <include refid="criteriaV"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} and vreport>=1 )
+		where rn > ( #{pageNum} - 1 ) * #{amount}
+	  ]]>
+	</select>
+   <!-- 정민 -->
+	<!-- vendor R 총갯수 -->
+	<select id="getTotaleCountRV" resultType="int">
+		select Count(*) from alt.vendor
+		where 
+		
+		<include refid="criteriaV"></include> 
+		
+		vreport >=1
+
+	</select>
+	 
+	  <!--  정민    vendor R 삭제 -->
+     <delete id="vendortDeleteR" parameterType="String" >
+	 	delete from alt.vendor where vid=#{vid}   
+	 </delete>
+   
+	   <!-- 정민 client 총수 -->
+	 <select id ="clientCount" resultType="int">
+	   select Count(*) from alt.client
+	 </select>
+	 
+	   <!-- 정민 vendor 총수 -->
+	 <select id ="vendorCount" resultType="int">
+	   select Count(*) from alt.vendor
+	 </select>
+	 
+	 <!-- 회원 업체 탈퇴여부  수 총합 -->
+	<select id ="deleteSum" resultType="int">	
+		 SELECT SUM( a_delete)
+			FROM (
+					select count(*) a_delete from client where cdelete = 'Y'
+										union ALL
+					select count(*) a_delete from vendor where vdelete = 'Y'
+			)
+	 </select>
+	 
+	  <!--  정민 회원 업체 신고 수 총합 -->
+	<select id ="reportSum" resultType="int">
+		 SELECT SUM( a_report)
+			FROM (
+					select count(*) a_report from client where creport > 0
+										union ALL
+					select count(*) a_report from vendor where vreport > 0
+			)
+	</select> 
+	
+	<!--  정민 vendor 지역 비율 -->
+	<select id="vendorRto" resultType="com.alt.domain.RtoVO">
+			SELECT     A.CityCd     cityCd
+			       ,   A.CityNm     cityNm
+			       ,   NVL(SUM(A.CityCnt),0 )   nvl2
+			       ,   AVG(B.TotCnt )           totCnt
+			       ,   ROUND(  (  SUM(A.CityCnt) /   AVG(B.TotCnt ) ) * 100    ,  2 )  rto
+			FROM  (
+			           SELECT     CityCd
+			                  ,   CityNm
+			                  ,   CityCnt
+			           FROM  (
+			                      SELECT    A.vid
+			                           ,    A.vaddress
+			                           ,    substr(A.vaddress,1,2)    vaddress
+			                           , DECODE(  substr(A.vaddress,1,2)  , '서울' , '경기'
+			                                                            , '경기' , '경기'
+			                                                            , '인천' , '경기'
+			                                                            , '강원' , '강원'
+			                                                            , '충청' , '충청'
+			                                                            , '대전' , '충청'
+			                                                            , '세종' , '충청'
+			                                                            , '전라' , '전라'
+			                                                            , '광주' , '전라'
+			                                                            , '경상' , '경상'
+			                                                            , '부산' , '경상'
+			                                                            , '대구' , '경상'
+			                                                            , '울산' , '경상'
+			                                                            , '제주' , '제주'
+			                                                            , 'X'
+			                                                            )  CityNm
+			                            , DECODE(  substr(A.vaddress,1,2) , '서울' , '01'
+			                                                            , '경기' , '01'
+			                                                            , '인천' , '01'
+			                                                            , '강원' , '02'
+			                                                            , '충청' , '03'
+			                                                            , '대전' , '03'
+			                                                            , '세종' , '03'
+			                                                            , '전라' , '04'
+			                                                            , '광주' , '04'
+			                                                            , '경상' , '05'
+			                                                            , '부산' , '05'
+			                                                            , '대구' , '05'
+			                                                            , '울산' , '05'
+			                                                            , '제주' , '06'
+			                                                            , 'X'
+			                                                            )  CityCd
+			                           ,    1                              CityCnt
+			                     FROM  vendor  A
+			                 )
+			            union all      select '01' , '경기'  ,0   from  dual
+			            union all      select '02' , '강원'  ,0   from  dual
+			            union all      select '03' , '충청'  ,0   from  dual
+			            union all      select '04' , '전라'  ,0   from  dual
+			            union all      select '05' , '경상'  ,0   from  dual
+			            union all      select '06' , '제주'  ,0   from  dual
+			     ) A,
+			     ( SELECT COUNT(*) TotCnt     FROM   VENDOR  ) B
+			GROUP BY   A.CityCd
+			       ,   A.CityNm
+			ORDER BY   A.CityCd 
+	
+	</select>
+	
+ <!-- product -->
+	   <sql id="product">   
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>  <!--  (  N: pname  ) -->
+							 
+							<when test="type == 'N'.toString()">
+								pname like '%'||#{keyword}||'%'
+							</when>
+							 
+					 </choose>
+				 </trim>
+			</foreach>
+	  </trim>
+	 </sql> 
+
+		  <!-- 정민  상품 리스트 -->
+	 <select id="productList" resultType="com.alt.domain.ProductVO">
+	   <![CDATA[
+	    SELECT * FROM  alt.product order by pcode desc 
+	      	 
+	  ]]>
+	  </select>
+	  
+	<!-- 정민 상품 등록 -->  
+	<insert id="registerProduct" >
+		INSERT INTO alt.product( pcode , pname )
+		VALUES (alt.seq_product.nextval, #{pname} )
+	</insert>
+	 
+	<!-- 정민 -->
+	<!--  상품 등록 페이징  -->
+	<select id="productListPaging" resultType="com.alt.domain.ProductVO">
+	   <![CDATA[
+	      SELECT
+	      pcode , pname
+	      FROM ( 
+	      	SELECT /*+ INDEX_DESC (product PK_product) */ 
+	      	rownum rn,pcode , pname
+	      FROM   
+	      	alt.product
+	      WHERE
+	  ]]>
+	  
+	  <include refid="product"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} )
+		where rn > ( #{pageNum} - 1 ) * #{amount} 
+	  ]]>
+	</select>  
+	 <!-- product 총갯수 -->
+	<select id="getProductCount" resultType="int">
+		select Count(*) from alt.product
+		where 
+		
+		<include refid="product"></include> 
+		
+		pcode >=1
+
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 주문량 카운트 -->
+	<select id="orderChart" resultType="com.alt.domain.ChartVO">
+	  <![CDATA[	
+	   	  	   select substr(to_char(a.odate, 'yyyymmdd'),1,6) as ordDt,  
+              count(b.oamount) as oamount
+		from alt.ord a
+		inner join alt.ordproduct b on a.ocode = b.ocode 
+		where    to_char(a.odate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.odate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		group by substr(to_char(a.odate, 'yyyymmdd'),1,6)
+		ORDER BY 1,2 
+ 		]]>
+	</select>
+	
+	
+	<!-- 정민 -->
+	<!-- 회원 한달 추가 카운트 -->
+	<select id="clientChart" resultType="com.alt.domain.ClientChartVO">
+	 <![CDATA[	
+	  select      substr(to_char(a.cjoindate, 'yyyymmdd'),1,6)   cjoindate
+	   			,  count(cid) as cid
+		from alt.client a
+		
+		where    to_char(a.cjoindate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.cjoindate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		group by substr(to_char(a.cjoindate, 'yyyymmdd'),1,6)
+		         
+		ORDER BY 1,2
+	 
+	]]>
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 회원 탈퇴 차트 카운트 -->
+	<select id="clientChartD" resultType="com.alt.domain.ClientChartVO">
+	 <![CDATA[	
+	  select      substr(to_char(a.cjoindate, 'yyyymmdd'),1,6)   cjoindate
+	   			,  count( cdelete) as  cdelete
+		from alt.client a
+
+		where    to_char(a.cjoindate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.cjoindate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		and cdelete ='Y'
+		group by substr(to_char(a.cjoindate, 'yyyymmdd'),1,6)
+
+		ORDER BY 1,2
+	 
+	]]>
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 업체 한달 추가 카운트 -->
+	<select id="vendorChart" resultType="com.alt.domain.VendorChartVO">
+	 <![CDATA[	
+	  select      substr(to_char(a.vjoindate, 'yyyymmdd'),1,6)   vjoindate
+	   			,  count(vid) as vid
+		from alt.vendor a
+		
+		where    to_char(a.vjoindate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.vjoindate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		group by substr(to_char(a.vjoindate, 'yyyymmdd'),1,6)
+		         
+		ORDER BY 1,2
+	 
+	]]>
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 회원 탈퇴 차트 카운트 -->
+	<select id="vendorChartD" resultType="com.alt.domain.VendorChartVO">
+	 <![CDATA[	
+	  select      substr(to_char(a.vjoindate, 'yyyymmdd'),1,6)  as vjoindate
+	   			,  count( vdelete) as  vdelete
+		from alt.vendor a
+
+		where    to_char(a.vjoindate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.vjoindate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		and vdelete ='Y'
+		group by substr(to_char(a.vjoindate, 'yyyymmdd'),1,6)
+
+		ORDER BY 1,2
+	 
+	]]>
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 총매출 -->
+	<select id="totalPrice" resultType="com.alt.domain.TotalPriceVO">
+	 <![CDATA[	
+	  select      substr(to_char(a.oDate, 'yyyymmdd'),1,6)   odate
+	   			,  sum(oamount * oprice) as totalPrice
+		from alt.ord a
+		inner join alt.ordproduct b on a.ocode = b.ocode
+
+		where    to_char(a.oDate, 'yyyymmdd')  >=  to_char(ADD_MONTHS( sysdate, -11), 'yyyymmdd')
+		and      to_char(a.oDate, 'yyyymmdd')  <=  to_char(sysdate, 'yyyymmdd')
+		group by substr(to_char(a.oDate, 'yyyymmdd'),1,6)
+
+		ORDER BY 1,2
+	 
+	]]>
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 총상품수 -->
+	<select id="totalsaleboard"  resultType="int">
+	 select Count(*) from alt.SALEBOARD
+	</select>
+	
+	<!-- 정민 -->
+	<!-- 총상품수 -->
+	<select id="totalOrd"  resultType="int">
+	 select count(*) from alt.ordProduct
+	</select>
+	
+		 <!-- client -->
+ <sql id="saleList">   
+	  <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>  <!--  (I: vid, T: swriteDate, stitle) -->
+							<when test="type == 'I'.toString()">
+								vid like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'T'.toString()">
+								swriteDate like '%'||#{keyword}||'%'
+							</when>
+							<when test="type == 'A'.toString()">
+								stitle like '%'||#{keyword}||'%'
+							</when>
+					 </choose>
+				 </trim>
+			</foreach>
+	  </trim>
+	 </sql> 
+	<!-- 정민 -->
+	<!-- 상품 리스트 -->
+	<select id= "saleList" resultType="com.alt.domain.SaleBoardVO">
+		  <![CDATA[
+	      SELECT sno, vid ,pcode ,stitle ,sinfo ,swriteDate , supdateDate ,sprice ,sdelete,scount,samount
+	      FROM (SELECT /*+ INDEX_DESC (SALEBOARD PK_SALEBOARD) */ 
+	      			   rownum rn, sno, vid ,pcode ,stitle ,sinfo ,swriteDate  ,supdateDate ,sprice ,sdelete,scount,samount
+	      		FROM alt.SALEBOARD 
+	      		WHERE
+	     ]]>
+	  
+	  <include refid="saleList"></include>   
+	  
+	  <![CDATA[
+		rownum <= #{pageNum} * #{amount} )
+		where rn > ( #{pageNum} - 1 ) * #{amount} 
+	  ]]>
+	</select>  
+		
+	<!-- 정민 --> 
+	<!-- 상품 리스트 -->
+	<select id="saleListCount" resultType="int">
+		select Count(*) from alt.SALEBOARD
+		where 
+		
+		<include refid="saleList"></include> 
+		
+		sno > 0
+
+	</select>
+ 
+	 <!--   정민  판매게시판 삭제 -->
+   <delete id="saleListDelete" parameterType="String" >
+	 	delete from alt.SALEBOARD  where sno=#{sno}
+	 </delete> 
+	 
+	  
+	
+</mapper>

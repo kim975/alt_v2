@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alt.mapper.BoardMapper">
+	
+	<!-- 용민 -->
+	<!-- saleboard 판매 게시판  항목 가져오기 페이징처리-->
+  	<select id="getListPaging" resultType="com.alt.domain.SaleBoardVO"> 
+	<![CDATA[ 
+		select sno, stitle, sinfo, sprice
+		from (select /*+INDEX_DESC (saleboard PK_SALEBOARD)*/ 
+			  rownum rn, sno, stitle, sinfo, sprice
+			  from alt.saleBoard
+			  where
+	]]>
+		<if test='keyword != null'>
+			stitle like '%'||#{keyword}||'%' and
+ 		</if>
+		
+	 <![CDATA[
+			  rownum <= #{pageNum} * #{amount} and sdelete = 'N'
+		) 
+		where rn > (#{pageNum} -1) * #{amount} 
+	]]> 
+	</select>
+  	
+  	<!-- 용민 -->
+  	<!-- 게시판 별점 평균 -->
+  	<select id="selectSaleBoardStar" resultType="Map">
+  		select sno, round(avg(rstar)) rstar, count(rstar) cnt
+		from reply
+		where rdelete = 'N' and
+		<foreach collection="list" item="item" open="(" close=")" separator="or">
+			 sno = #{item}
+		</foreach>
+		GROUP BY  sno
+		order by sno desc
+  	</select>
+  	
+  	<!-- 용민 -->
+	<!-- saleboard 이미지 썸네일 가져오기-->
+  	<select id="selectSaleBoardThumbImage" resultType="com.alt.domain.SaleThumbImgVO">
+		SELECT *
+		from alt.saleThumbImg
+		WHERE 
+		<foreach collection="list" item="item" open="(" close=")" separator="or">
+		 sno = #{item}
+		</foreach>
+		order by sno desc
+	</select>
+  	
+  	<!-- 용민 -->
+	<!-- saleDetail 이미지 가져오기-->
+  	<select id="selectSaleBoardImamge" resultType="com.alt.domain.SaleImgVO">
+  		select *
+  		from alt.saleImg
+  		where sno = #{sno}
+  	</select>
+  
+  	<!-- 용민 -->
+ 	<!-- 상세 페이지 값 가져오기 -->
+	<select id="getSaleDetail" resultType="com.alt.domain.SaleBoardVO">
+	<![CDATA[
+		select *
+		from alt.saleBoard
+		where sno = #{sno}
+	]]> 	
+	</select>
+	
+	<!-- 용민 -->
+	<!-- 장바구니에 추가 -->
+	<insert id="insertBasket">
+	<![CDATA[
+		INSERT INTO alt.basket 
+		VALUES (seq_basket.nextval, #{cid}, #{sno}, default, #{bamount}, #{bprice})
+	]]> 	
+	</insert>
+	
+	<!-- 용민 -->
+	<!-- 장바구니 목록 가져오기 -->
+	<select id="selectBasketList" resultType="com.alt.domain.BasketVO">
+	<![CDATA[
+		SELECT * 
+		from alt.basket
+		where cid = #{cid}		
+	]]>		
+	</select>
+	
+	<select id="selectBasketListSaleBoard" resultType="Map">
+	<![CDATA[
+		SELECT a.BCODE, a.CID , a.BDATE, a.BAMOUNT, a.BPRICE, b.*
+		from alt.basket a
+		full outer join alt.saleboard b
+		on a.sno = b.sno
+		where cid = #{cid}		
+	]]>		
+	</select>
+	
+	<!-- 용민 -->
+	<!-- 장바구니 목록 삭제 -->
+	<delete id="deleteBasket">
+	<![CDATA[
+		delete from alt.basket where bcode = #{bcode}
+	]]>	
+	</delete>
+	
+	<!-- 용민 -->
+	<!-- 장바구니 총 가격 계산-->
+	<select id="selectBasketTotalPrice" resultType="Integer">
+	<![CDATA[
+		select sum(bprice * BAMOUNT)
+		from alt.basket
+		where cid = #{cid}
+	]]>	
+	</select>
+	
+	<select id="selectZim" resultType="Integer">
+		select count(*) as result
+		from alt.zim
+		where cid= #{cid} and sno = #{sno} 
+	</select>
+	
+	<insert id="insertZim">
+	<![CDATA[
+		INSERT INTO alt.zim 
+		VALUES (seq_zim.nextval, #{cid}, #{sno})
+	]]> 	
+	</insert>
+	
+	<delete id="deleteZim">
+		delete from alt.zim
+		where sno = #{sno} and cid = #{cid}
+	</delete>
+	
+	<!-- 용민 -->
+	<!-- 상품 등록  -->
+	<insert id="insertSaleProductRegister">
+	<selectKey keyProperty="sno" order="BEFORE" resultType="Integer">
+  		select alt.seq_saleBoard.nextval from dual
+  	</selectKey>
+	<![CDATA[
+		INSERT INTO alt.saleboard 
+		VALUES (#{sno}, #{vid}, #{pcode}, #{stitle}, #{sinfo}, default, default, #{sprice}, default, default, #{samount})
+	]]> 	
+	</insert>
+	
+	
+	<!-- 용민 -->
+	<!-- 총 판매 게시글 수 -->
+	<select id="selecTotalCount" resultType="Integer">
+		select count(sno)
+		from alt.saleboard
+		where sdelete = 'N'
+	</select>
+	
+	<!-- 용민 -->
+	<!-- 판매 게시글 수정-->
+	<update id="updateSaleProduct">
+		update alt.saleboard 
+		set pcode= #{pcode}, 
+			stitle=#{stitle},
+			sinfo = #{sinfo},
+			sprice = #{sprice},
+			samount = #{samount}, 
+			supdateDate = systimestamp 
+		where sno=#{sno}
+	</update>
+	
+	<!-- 용민 -->
+	<!-- 총 판매 게시글 수 -->
+	<update id="updateRemoveProduct">
+	<![CDATA[
+		update alt.saleBoard
+		set sdelete = 'Y'
+		where sno = #{sno}
+	]]>
+	</update>
+	
+	<!-- 용민 -->
+	<!-- ord 추가 -->
+	<insert id="insertOrd">
+	<selectKey keyProperty="ocode" order="BEFORE" resultType="String">
+  		select to_char(sysdate,'YYYYMMDD')||'_'||LPAD(alt.seq_ord.nextval, 8, '0') from dual
+  	</selectKey>
+	<![CDATA[
+		INSERT INTO alt.ord
+		VALUES (#{ocode}, #{cid}, #{oaddress}, #{ophone}, default, default)
+	]]> 	
+	</insert>
+	
+	<!-- 용민 -->
+	<!-- ord 추가 주문 목록 -->
+	<insert id="insertOrdProduct">
+	<![CDATA[
+		INSERT INTO alt.OrdProduct
+		VALUES (alt.seq_ordProduct.nextval, #{ocode}, #{sno}, #{oamount}, #{oprice}, default)
+	]]> 	
+	</insert>
+	
+	<delete id="deleteBasketAll">
+	<![CDATA[
+		delete from alt.basket where cid = #{cid}
+	]]>	
+	</delete>
+	
+	<select id="selectCountStar" resultType="Map">
+		SELECT rstar, COUNT(rstar) AS rstarCount 
+		FROM alt.reply 
+      	where sno = #{sno} and rdelete = 'N'
+		GROUP BY rstar
+		order by rstar desc
+	</select>
+	
+	<select id="selectPcode" resultType="com.alt.domain.ProductVO">
+		select * 
+		from alt.product
+	</select>
+	
+	<insert id="insertOrdConfer">
+	<selectKey keyProperty="ocode" order="BEFORE" resultType="String">
+  		select to_char(sysdate,'YYYYMMDD')||'_'||LPAD(alt.seq_ord.nextval, 8, '0') from dual
+  	</selectKey>
+	<![CDATA[
+		INSERT INTO alt.ord
+		VALUES (#{ocode}, #{cid}, '주소를 입력해주세요.', '핸드폰 번호를 입력해주세요.', default, 'N')
+	]]> 	
+	</insert>
+	
+	<insert id="insertOrdProductConfer">
+		INSERT INTO alt.OrdProduct
+		VALUES (alt.seq_ordProduct.nextval, #{ocode}, #{sno}, #{oamount}, #{oprice}, 'N')
+	</insert>
+	
+	<select id="selectProduct" resultType="Map">
+  	<![CDATA[
+  		SELECT a.*, b.*
+		from alt.ord a
+		full outer join alt.ordProduct b
+		on a.ocode = b.ocode
+		where a.ocode = #{ocode}	
+    ]]>
+    </select>
+	
+	<update id="updateOrdConfer">
+		update alt.ord 
+		set oaddress= #{oaddress}, 
+			ophone = #{ophone},
+			odate = systimestamp 
+		where ocode=#{ocode}
+	</update>
+	
+</mapper>

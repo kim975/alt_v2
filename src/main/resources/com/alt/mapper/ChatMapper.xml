@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.alt.mapper.ChatMapper">
+	
+	<!-- 지영 -->
+	<!-- 채팅방 있는지 확인 -->
+	<select id="selectRoomCheck" resultType="int">
+	<![CDATA[
+		SELECT count(*)
+		FROM alt.chatroom
+		WHERE cid=#{cid} and vid=#{vid}
+	]]>
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 채팅방 번호 select -->
+	<select id="selectRoom" resultType="String">
+	<![CDATA[
+		SELECT roomno
+		FROM alt.chatroom
+		WHERE cid=#{cid} and vid=#{vid}
+	]]>
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 채팅방 생성-->
+	<insert id="createRoom">
+	<![CDATA[
+		INSERT INTO alt.chatroom
+		VALUES (alt.seq_chatroom.nextval, #{cid}, #{vid}, DEFAULT)
+	]]>
+	</insert>
+	
+	<!-- 지영 -->
+	<!-- 채팅방 생성-->
+	<select id="selectVendorChatRoom" resultType="com.alt.domain.ChatRoomVO">
+		select *
+		from alt.chatroom
+		where vid = #{vid}
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 채팅방 생성-->
+	<select id="selectClientChatRoom" resultType="com.alt.domain.ChatRoomVO">
+		select *
+		from alt.chatroom
+		where cid = #{cid}
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 채팅방삭제 -->
+	<delete id="removeRoom">
+	<![CDATA[
+		DELETE FROM alt.chatroom WHERE roomno=#{roomno}
+	]]>
+	</delete>
+	
+	<!-- 메세지 -->
+	
+	<!-- 지영 -->
+	<!-- 메세지 생성-->
+	<insert id="insertMsg">
+	<![CDATA[
+		INSERT INTO alt.chatmsg
+		VALUES (alt.seq_chatmsg.nextval, #{roomno}, #{id}, #{msg}, DEFAULT, DEFAULT)
+	]]>
+	</insert>
+		
+	<!-- 지영 -->
+	<!-- 메세지 DB불러오기-->	
+	<select id="selectMsg" resultType="com.alt.domain.ChatMsgVO">
+		select *
+		from alt.chatMsg
+		where roomno = #{roomno}
+		order by msgdate
+	</select>
+	
+	<!-- 지영 -->
+	<!-- 메세지 읽음/안읽음 처리 -->
+	<update id="updateMsgRead">
+		update alt.chatMsg
+		set msgread = 'Y'
+		where id != #{id} 
+	</update>
+
+</mapper>

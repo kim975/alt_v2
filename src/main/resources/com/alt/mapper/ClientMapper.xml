@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.alt.mapper.ClientMapper">
+	
+	<!-- 정민 -->
+	<resultMap id="memResult" type="java.util.HashMap">
+	        <result property="cid" column= "cid" />
+	        <result property="cnick" column= "cnick" />
+	        <result property="cgrade" column= "cgrade" />
+	</resultMap>
+
+	<!-- 정민 -->
+	<!-- 아이디 삽입 -->
+<!-- 	<insert id="register" parameterType="com.alt.domain.ClientVO">
+		insert into client 
+		values (#{cid} , #{cpassword} , #{cname} , #{cnick} , #{cphone} , #{caddress} , default , default , default, default, default) 
+	</insert>    --> 
+	
+		<!-- 정민 -->
+	<!-- 아이디 삽입 -->
+	<insert id="register" parameterType="com.alt.domain.ClientVO">
+		insert into alt.client 
+		values (#{cid} , #{cpassword} , #{cname} , #{cnick} , #{cphone} , #{caddress} , default , default , default, default, default) 
+	</insert>    
+	
+	<!-- 아이디 삽입 -->
+	<insert id="Roleregister" parameterType="com.alt.domain.ClientAuthVO">
+		insert into alt.clientauth 
+		values (#{cid}, 'ROLE_CLIENT') 
+	</insert>  
+	
+	<!-- 정민 -->
+	<!-- 아이디 맞는지 확인 -->
+	<select id="loginCheck" resultMap="memResult">
+		SELECT cid, cnick, cgrade FROM alt.client  where cid = #{cid} AND cpassword = #{cpassword}
+	</select> 
+	
+	<!-- <select id="loginCheck" resultMap="com.alt.domain.ClientVO">
+		SELECT * FROM alt.client  where cid = #{cid} AND cpassword = #{cpassword}
+	</select> -->
+	
+	<!-- 정민 -->
+	<!-- 회원가입 시 ID 중복  확인 SELECT -->	
+ 	<select id="idCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.client 	
+		WHERE cid=#{cid}
+     </select>
+    
+    <!-- 정민 --> 
+	<!-- 회원가입 닉 중복  확인 SELECT -->	
+ 	<select id="nickCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.client 	
+		WHERE cnick=#{cnick}
+     </select>
+     
+     <!-- 정민 -->
+     <!-- 회원가입 전화번호 중복  확인 SELECT -->	
+ 	<select id="phoneCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
+		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
+					 ELSE 'not_usable' END) AS RESULT 
+		FROM  alt.client 	
+		WHERE cphone=#{cphone}
+     </select>
+	  
+	 
+ <!-- //////////////////////////////////////////////////////////////////// -->
+ 
+ 
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 정보 출력 -->
+	<select id="listClient" resultType="com.alt.domain.ClientVO">
+	<![CDATA[
+		select * from alt.client where cid = #{cid} 
+	]]>
+	</select>
+	
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 정보 수정 -->
+	<update id="modifyClient">
+	<![CDATA[
+		update alt.client set 
+		cpassword = #{cpassword}, cname = #{cname}, cnick = #{cnick}, cphone = #{cphone}, caddress = #{caddress} 
+		where cid = #{cid}
+	]]>
+	</update>
+
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 정보 수정 (비밀번호) -->
+	<update id="modifyPasswordClient">
+	<![CDATA[
+		update alt.client set 
+		cpassword = #{cpassword}
+		where cid = #{cid} 
+	]]>
+	</update>
+	
+	<!-- 서영 -->
+	<!-- 마이페이지/회원 탈퇴 -->
+	<update id="deleteClient">
+	<![CDATA[
+		update alt.client set cdelete = 'Y' 
+		where cid = #{cid} AND cpassword = #{cpassword}
+	]]>
+	</update>
+	
+	<!-- 마이페이지/회원 탈퇴/권한 삭제 -->
+	<delete id="deleteClientAuth">
+	<![CDATA[
+		delete from alt.clientauth
+		where cid = #{cid} 
+	]]>
+	</delete>
+	
+  	
+  	<!-- 서영 -->
+	<!-- 마이페이지/찜 리스트 -->
+	<select id="listZim" resultType="com.alt.domain.ZimVO">
+  	<![CDATA[
+  		select  zimcode, cid, stitle, sprice, s.sno 
+		from alt.zim z inner join alt.saleboard s on 
+			z.sno = s.sno 
+			where z.cid = #{cid}
+        ORDER BY z.zimcode DESC
+  	]]>
+  	</select> 	
+  	
+  	<!-- 서영 -->
+	<!-- 마이페이지-회원 주문 리스트 -->
+	<select id="listOrd" resultType="com.alt.domain.OrdVO">
+  	<![CDATA[
+  		SELECT * from alt.ord 
+		WHERE cid = #{cid} 
+		ORDER BY odate DESC 
+  	]]>
+  	</select>
+
+	<!-- 서영 -->
+	<!-- 마이페이지-회원 주문 결제 검색 -->
+	<select id="ordSearchClient" resultType="com.alt.domain.OrdVO">
+  	<![CDATA[
+  		SELECT * from alt.ord
+  	]]>
+		<if test="type!=null and type!=''">
+			<where>
+				<choose>
+					<when test="type == 'Y'.toString()">
+						opay = 'Y' and
+					</when>
+					<when test="type == 'N'.toString()">
+						opay = 'N' and
+					</when>
+				</choose>
+				cid = #{cid}
+			</where>
+		</if>
+	<![CDATA[
+		ORDER BY odate DESC
+ 	]]>
+  	</select>
+  	
+  	<!-- 성환 -->
+    <!-- 마이페이지-주문 상세 목록 -->
+    <!--  여기에 inner join 넣기 -->
+    <select id="listOrdProduct" resultType="Map">
+  	<![CDATA[
+  		SELECT p.ordProductCode, p.oamount, p.oprice, p.oppay, b.*, o.*
+  		from alt.ordProduct p full outer join alt.saleboard b
+  		on p.sno = b.sno full outer join alt.ord o on p.ocode = o.ocode
+		WHERE o.ocode = #{ocode} 
+    ]]>
+    </select>
+  	
+  	
+  	
+ 	<resultMap type="com.alt.domain.MemberVO" id="MemberMap">
+		<id property="id" column="id"/>
+		<result property="cid" column="cid"/>
+		<result property="cpassword" column="cpassword"/>
+		<result property="cname" column="cname"/>
+		<result property="cnick" column="cnick"/>
+		<result property="cphone" column="cphone"/>
+		<result property="caddress" column="caddress"/>
+		<result property="cjoinDate" column="cjoinDate"/>
+		<result property="creport" column="creport"/>
+		<result property="cdelete" column="cdelete"/>
+		<result property="cgrade" column="cgrade"/>
+		<result property="enable" column="enable"/>
+		
+		<result property="vid" column="vid"/>
+		<result property="vpassword" column="vpassword"/>
+		<result property="vname" column="vname"/>
+		<result property="vregisterNo" column="vregisterNo"/>
+		<result property="vphone" column="vphone"/>
+		<result property="vaddress" column="vaddress"/>
+		<result property="vjoinDate" column="vjoinDate"/>
+		<result property="vinfo" column="vinfo"/>
+		<result property="vreport" column="vreport"/>
+		<result property="vdelete" column="vdelete"/>
+		<result property="vgrade" column="vgrade"/>
+		<collection property="ClientAuthList" resultMap="ClientAuthMap"></collection>
+		<collection property="vendorAuthList" resultMap="VendorAuthMap"></collection>
+	</resultMap>
+
+	<resultMap type="com.alt.domain.ClientAuthVO" id="ClientAuthMap">
+		<result property="cid" column="cid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<resultMap type="com.alt.domain.VendorAuthVO" id="VendorAuthMap">
+		<result property="vid" column="vid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="read" resultMap="MemberMap">
+	<!-- 교재 -->
+	<![CDATA[
+		select c.cid, cpassword, cname, cnick, cphone, caddress, cjoinDate, creport, cdelete, cgrade, enable, authority
+		from alt.client c LEFT OUTER JOIN alt.clientauth auth on 
+		c.cid = auth.cid 
+		where c.cid = #{id} 
+	]]>
+	</select>
+
+</mapper>

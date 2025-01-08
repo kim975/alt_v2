@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alt.mapper.BoardAttachMapper">
+<!-- 패키지명이 포함된 인터페이스 이름을 설정합니다. -->
+  
+	<insert id="insert">
+		insert into alt.saleImg
+		values(#{suuid}, #{suploadPath}, #{sfileName}, #{sno})
+	</insert>
+	
+	<!-- 용민 -->
+	<insert id="insertReplyImage">
+		insert into alt.replyImg
+		values(#{ruuid}, #{ruploadPath}, #{rfileName}, #{rno})
+	</insert>
+	
+	<!-- 용민 -->
+	<select id="insertThumb">
+		insert into alt.saleThumbImg
+		values(#{stuuid}, #{stuploadPath}, #{stfileName}, #{sno})
+	</select>
+	
+	<delete id="deleteInfoImage">
+		delete from saleImg where sno = #{sno}
+	</delete>
+	
+	<delete id="deleteThumbImage">
+		delete from saleThumbImg where sno = #{sno}
+	</delete>
+	
+	<delete id="deleteReplyImage">
+		delete from replyImg where rno = #{rno}
+	</delete>
+	
+	<select id="findByBno" resultType="com.alt.domain.SaleBoardVO">
+		select * from saleImg where sno = #{sno}
+	</select> 
+	
+	<!-- 특정 게시물의 모든 첨부파일 삭제 -->
+	<delete id="deleteAll">
+		delete saleImg where sno = #{sno}
+	</delete>
+	
+	<select id="selectAttachFilesBeforeOneDay" resultType="com.alt.domain.SaleBoardVO">
+	<![CDATA[
+		SELECT *
+		FROM saleImg
+		WHERE uploadpath = TO_CHAR(sysdate -1 ,'yyyy\mm\dd')
+	]]>
+	</select>
+</mapper>

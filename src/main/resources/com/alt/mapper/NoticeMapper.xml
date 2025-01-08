@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.alt.mapper.NoticeMapper">
+
+	<select id="noticeAllList" resultType="com.alt.domain.NoticeVO">
+		SELECT * FROM alt.admintable WHERE nno>0 ORDER BY nno DESC
+	</select>
+
+	<!-- 오라클 11g 페이징 쿼리 -->
+	<select id="noticePaging" resultType="com.alt.domain.NoticeVO">
+	<![CDATA[
+		SELECT nno, ntitle, ncontent, nwriter, nwriteDate, nupdateDate
+		FROM ( SELECT /*+ INDEX_DESC (a pk_admintable)*/ rownum rn, a.*
+				FROM alt.admintable a
+				WHERE rownum <=( #{pageNum} * #{amount} ) 
+			)
+		WHERE rn >= ( #{pageNum} * #{amount} ) - ( #{amount}-1 )
+	]]>
+	</select>
+	
+	<select id="noticePagingSearch" resultType="com.alt.domain.NoticeVO">
+	<![CDATA[
+		SELECT nno, ntitle, ncontent, nwriter, nwriteDate, nupdateDate
+		FROM (SELECT *
+			FROM ( SELECT /*+ INDEX_DESC (a pk_admintable) */ rownum rn, a.*
+				FROM alt.admintable a
+	]]>
+			<if test="keyword!=null and keyword!=''">
+				<where>
+					<choose>
+						<when test="type == null">
+							(nno>0)
+						</when>
+						<when test="type == 'T'.toString()">
+							(nno>0) AND (ntitle LIKE '%'||#{keyword}||'%')
+						</when>
+						<when test="type == 'C'.toString()">
+							(nno>0) AND (ncontent LIKE '%'||#{keyword}||'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							(nno>0) AND (nwriter LIKE '%'||#{keyword}||'%')
+						</when>
+						<when test="type == 'TC'.toString()">
+							(nno>0) AND (ntitle LIKE '%'||#{keyword}||'%') 
+									OR (ncontent LIKE '%'||#{keyword}||'%')
+						</when>
+						<when test="type == 'TW'.toString()">
+							(nno>0) AND (ntitle LIKE '%'||#{keyword}||'%') 
+									OR (nwriter LIKE '%'||#{keyword}||'%')
+						</when>
+						<when test="type == 'TCW'.toString()">
+							(nno>0) AND (ntitle LIKE '%'||#{keyword}||'%') 
+									OR (ncontent LIKE '%'||#{keyword}||'%') 
+									OR (nwriter LIKE '%'||#{keyword}||'%')
+						</when>
+					</choose>
+				</where>
+			</if>
+	<![CDATA[
+				)
+			WHERE rownum <= #{pageNum} * #{amount} )
+		WHERE rn >= (#{pageNum} * #{amount}) - (#{amount}-1)
+	]]>
+	</select>
+	
+ 	<select id="totalCountNotice" resultType="int">
+	<![CDATA[
+      SELECT count(nno) FROM alt.admintable
+	]]>
+		<if test="keyword!=null and keyword!=''">
+		   <where>
+		      <trim prefix="(" suffix=") " prefixOverrides="OR" >
+		         <foreach item='type' collection="typeArr">
+		            <trim prefix="OR">
+		               <choose>
+		                  <when test="type == 'T'.toString()">
+		                     ntitle LIKE '%'||#{keyword}||'%'
+		                  </when>
+		                  <when test="type == 'C'.toString()">
+		                     ncontent LIKE '%'||#{keyword}||'%'
+		                  </when>
+		                  <when test="type == 'W'.toString()">
+		                     nwriter LIKE '%'||#{keyword}||'%'
+		                  </when>
+		               </choose>
+		            </trim>
+		         </foreach>
+		      </trim>
+		   </where>
+	   </if>
+   </select>
+   	
+	<insert id="registerNotice">
+		INSERT INTO alt.admintable(nno, ntitle, ncontent, nwriter, nwriteDate, nupdateDate)
+		VALUES (alt.seq_admintable.nextval, #{ntitle}, #{ncontent}, #{nwriter}, DEFAULT, DEFAULT)
+	</insert>
+
+	<insert id="registerSelectKey">
+		<selectKey keyProperty="nno" order="BEFORE" resultType="long">
+			SELECT alt.seq_admintable.nextval FROM dual
+		</selectKey>
+	
+		INSERT INTO alt.admintable(nno, ntitle, ncontent, nwriter, nwriteDate, nupdateDate)
+		VALUES (#{nno}, #{ntitle}, #{ncontent}, #{nwriter}, DEFAULT, DEFAULT)
+	</insert>
+	
+	<select id="getNotice" resultType="com.alt.domain.NoticeVO">
+		SELECT * FROM alt.admintable WHERE nno=#{nno}
+	</select>
+	
+	<update id="modifyNotice">
+		UPDATE alt.admintable 
+		SET ntitle=#{ntitle}, ncontent=#{ncontent}, nwriter=#{nwriter}, nupdateDate=SYSTIMESTAMP(0)
+		WHERE nno=#{nno}
+	</update>
+	
+	<delete id="removeNotice">
+		DELETE FROM alt.admintable WHERE nno=#{nno}
+	</delete>
+	
+	<!-- /////////////////////////첨부파일 mapper -->
+	<insert id="addAttachNotice">
+		INSERT INTO alt.adminimg(nuuid, nuploadpath, nfilename, nfiletype, nno)
+		VALUES (#{nuuid}, #{nuploadPath}, #{nfileName}, #{nfileType}, #{nno} )
+	</insert>
+
+	<delete id="removeAttachNotice">
+		DELETE FROM alt.adminimg WHERE nuuid = #{nuuid}
+	</delete>
+
+	<select id="findNno" resultType="com.alt.domain.NoticeImgVO">
+		SELECT * FROM alt.adminimg WHERE nno = #{nno}
+	</select>
+	
+	<!-- 특정게시물의 모든 첨부파일 삭제 -->
+	<delete id="removeAllAttach">
+		DELETE FROM alt.adminimg WHERE nno=#{nno}
+	</delete>
+	
+	<!-- 실행되는 시점을 기존으로 하루전 날짜까지의 모든 첨부파일 정보를 조회 -->
+	<select id="selectAttachFilesBeforeOneDay" resultType="com.alt.domain.NoticeImgVO" >
+	<![CDATA[
+		 SELECT *
+		 FROM alt.adminimg
+		 WHERE nuploadpath = TO_CHAR(sysdate -1 ,'yyyy\mm\dd')
+	]]>
+	</select>
+	
+</mapper>

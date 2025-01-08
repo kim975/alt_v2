@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:beans="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xmlns:task="http://www.springframework.org/schema/task"
+   xmlns:security="http://www.springframework.org/schema/security"
+   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+      http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+      http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+   <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+   
+   <!-- Enables the Spring MVC @Controller programming mode : 컨트롤러 기능 활성화 -->
+   <annotation-driven />
+   
+   <!-- 스프링 시큐리티 어노테이션 사용 활성화 (옆에 빨간 양화살표시가 됩니다.) -->
+   <!-- <security:global-method-security pre-post-annotations="enabled" secured-annotations="enabled"/> -->
+
+   <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+   <resources mapping="/resources/**" location="/resources/" />
+
+   <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+   <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <beans:property name="prefix" value="/WEB-INF/views/" />
+      <beans:property name="suffix" value=".jsp" />
+   </beans:bean>
+   
+   <!-- 자동으로 빈 생성 설정 (@컨트롤러, @서비스 등등) -->
+   <context:component-scan base-package="com.alt.controller"/>
+   <context:component-scan base-package="com.alt.doamin"/>
+   <context:component-scan base-package="com.alt.service"/>
+   <context:component-scan base-package="com.alt.config"/>
+   <context:component-scan base-package="com.alt.util"/>
+   <context:component-scan base-package="com.alt.*"/>
+   <!-- <context:component-scan base-package="org.zerock.aop"/> -->
+   <!-- <context:component-scan base-package="org.zerock.task"/> -->
+   <!-- <context:component-scan base-package="org.zerock.interceptor"/> -->
+   
+   <context:annotation-config/>
+   <aop:aspectj-autoproxy/>
+   
+   <!-- 오류 -->
+   <!-- <context:component-scan base-package="org.zerock.exception"/> -->
+
+   <!-- 파일처리 -->
+   <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <!-- 한글이 깨지는 문제처리 -->
+      <beans:property name="defaultEncoding" value="utf-8"></beans:property>
+      <!-- 한번의 최대 크기 10MB -->
+      <beans:property name="maxUploadSize" value="104857560"></beans:property>
+      <!-- 하나의 최대 크기 2MB -->
+      <beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
+      <!-- 크기 이상 시 임시 파일 보관 -->
+      <beans:property name="uploadTempDir" value="file:/C:/upload/tmp"></beans:property>
+      <!-- 메모리상의 유지 최대 쿠기 -->
+      <beans:property name="maxInMemorySize" value="10485756"></beans:property>
+   </beans:bean>
+   
+   <beans:bean id="multipartResolver1" 
+            class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+   </beans:bean>
+   
+   <!-- @Scheduler 어노테이션을 사용한 경우의 설정 -->
+   <!-- 스캐쥴 아이디: clearUploadRepoJobScheduler, ThreadPool 개수: 10개 -->
+   <task:scheduler id="clearUploadRepoJobScheduler" pool-size="10" />
+   <task:annotation-driven scheduler="clearUploadRepoJobScheduler" />
+   
+   <!-- @Scheduler 어노테이션을 사용할 경우의 설정: ThreadPool 개수: 3개 -->
+   <!-- <task:annotation-driven/>
+   <task:scheduler id="clearUploadRepoScheduleBean" pool-size="3"/> -->
+
+   <!-- 예2)
+   <task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+       <task:executor id="myExecutor" pool-size="5"/>
+       <task:scheduler id="myScheduler" pool-size="10"/>
+    -->
+   
+   <!-- @Scheduler 어노테이션을 사용하지 않는 경우의 설정 -->
+   <!-- 1. Configure the scheduler -->
+   <!-- <task:scheduler id="clearUploadRepoJobScheduler" pool-size="3"/> -->
+   <!-- 2. Configure parameters  -->
+   <!--  
+    <task:scheduled-tasks scheduler="clearUploadRepoJobScheduler">
+      <task:scheduled ref="clearUploadRepo" method="clearNeedlessFiles" cron = "0 49 * * * *"/>
+    </task:scheduled-tasks> 
+    -->
+   
+   <!-- 인터럽터 설정 (스프링 MVC의 요소를 이용함) -->
+   <!-- <mapping 태그의 path설저에 인터셉터가 동작하는 요청 URL 패턴을 지정 -->
+   <!-- <exclude-mapping 태그의 path 속성에는 인터셉터 실행이 제외되는 URL을 지정 -->
+   <!--  <beans:bean 태그 : 인터셉터 기능을 수행할 클래스 지정 -->
+   
+   <!-- <interceptors>
+      <interceptor>
+         <mapping path="/board/*"/>
+         <exclude-mapping path="/board/list"/>
+         <mapping path="/board/get"/>
+         <mapping path="/board/modify"/>
+         <exclude-mapping path="/resources/*"/>
+         
+         <beans:bean class="org.zerock.interceptor.LoginInterceptor" />
+      </interceptor>
+   </interceptors> -->
+   
+   <!-- 메일 -->
+<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<beans:property name="host" value="smtp.naver.com" />
+	<beans:property name="port" value="587" />
+	<beans:property name="username" value="" />
+	<beans:property name="password" value="" />
+	<beans:property name="defaultEncoding" value="utf-8" />
+	<beans:property name="javaMailProperties">
+		<beans:props>
+			<beans:prop key="mail.debug">true</beans:prop>
+			<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+			<beans:prop key="mail.smtps.ssl.checkserveridentity">true</beans:prop>
+			<beans:prop key="mail.smtp.auth">true</beans:prop>
+			<beans:prop key="mail.smtps.ssl.trust">*</beans:prop>
+			<beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</beans:prop>
+		</beans:props>
+	</beans:property>
+</beans:bean>
+   
+</beans:beans>

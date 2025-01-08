@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alt.mapper.ReplyMapper">
+
+	<!-- 용민 -->
+	<!-- 상품 등록  -->
+	<insert id="insertReplyRegister">
+	<selectKey keyProperty="rno" order="BEFORE" resultType="Integer">
+  		select alt.seq_reply.nextval from dual
+  	</selectKey>
+	<![CDATA[
+		INSERT INTO alt.reply 
+		VALUES (#{rno}, #{rwriter}, #{rcontent}, default, default, #{rstar}, default, #{sno})
+	]]> 	
+	</insert>
+	
+	<!-- 용민 -->
+	<!-- 디테일 페이지 댓글 가져오기 --><!-- 페이징 되면 삭제 -->
+	<select id="selectSaleBoardRelpy" resultType="com.alt.domain.ReplyVO">
+		select *
+		from alt.reply
+		where sno = #{sno} and rdelete = 'N'
+	</select>
+	
+	<!-- 용민 -->
+	<!-- 댓글 목록, 페이징을 고려한 코드 -->
+	<select id="selectSaleBoardReplyPaging" resultType="com.alt.domain.ReplyVO">
+  	<![CDATA[
+		 select  rno, rwriter, rcontent, rwriteDate, rupdateDate, rstar, rdelete, sno
+		 from ( select /*+INDEX_DESC(a PK_REPLY) */rownum rn, a.* 
+		    	from alt.reply a 
+		    	where sno =  #{sno} 
+		    		  and rownum <= #{cri.pageNum} * #{cri.amount} and rdelete = 'N' ) 
+		 where rn >= (#{cri.pageNum} * #{cri.amount}) - (#{cri.amount} - 1) 
+	]]>
+	</select>
+	
+	<!-- 댓글 개수 -->
+	<select id="selectCountReply" resultType="Integer">
+	<![CDATA[
+		select count(rno) 
+		from alt.reply 
+		where sno = #{sno} and rdelete = 'N' 
+	]]>
+	</select>
+		
+	
+	<select id="selectRelpy" resultType="com.alt.domain.ReplyVO">
+		select *
+		from alt.reply
+		where rno = #{rno}
+	</select>
+	
+	<!-- 용민 -->
+	<!-- saleboard 이미지 썸네일 가져오기-->
+  	<select id="selectReplyImage" resultType="com.alt.domain.ReplyImgVO">
+		SELECT *
+		from alt.replyimg
+		WHERE 
+		<foreach collection="list" item="item" open="(" close=")" separator="or">
+		 rno = #{item}
+		</foreach>
+		order by rno desc
+	</select>
+	
+	<!-- 용민 -->
+	<!-- 댓글 수정-->
+	<update id="updateReply">
+		update alt.reply 
+		set RCONTENT= #{rcontent}, 
+			RSTAR=#{rstar}, 
+			RUPDATEDATE = systimestamp 
+		where rno=#{rno}
+	</update>
+	
+	<!-- 용민 -->
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply">
+		update alt.reply 
+		set rdelete = 'Y'
+		where rno = #{rno}
+	</update>
+	
+	<select id="selectIndexReply" resultType="Map">
+	<![CDATA[
+		select  *
+		from (select  *
+	    	  from alt.reply re
+     		  full outer join alt.saleboard b
+      		  on re.sno = b.sno
+      		  where rdelete = 'N'
+      		  order by rno desc
+  	  		 )
+		where rownum <= 6
+	]]>
+	</select>
+	
+</mapper>
