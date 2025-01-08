@@ -36,7 +36,7 @@ public class ReplyController {
 	@Setter(onMethod_ = {@Autowired})
 	private ReplyService replyService;
 	
-	//용민
+	//
 	//상품 상세 페이지
 	@GetMapping("/replyRegister")
 	public void replyRegisterPage(@RequestParam("sno") int sno, Model model) {
@@ -45,7 +45,7 @@ public class ReplyController {
 		
 	}
 	
-	//용민
+	//
 	//상품 수정 페이지
 	@GetMapping("/replyModify")
 	public void replyModifyPage(@RequestParam("rno") int rno, 
@@ -78,7 +78,7 @@ public class ReplyController {
 		
 	}
 	
-	//용민
+	//
 	//------댓글 등록
 	@PostMapping(value = "/new")
 	public String create(ReplyVO replyVO) {
@@ -103,7 +103,7 @@ public class ReplyController {
 		//삼항 연산자 처리.
 	}
 	
-	//용민
+	//
 	//상품 댓글 이미지
 	@GetMapping(value = "/getReplyImageList",
 			produces = "application/json; charset=utf-8")

@@ -28,7 +28,7 @@
           </div><!-- End col-lg-4 -->
        </div><!-- END row --> 
        
-       <!-- 지영 -->
+       <!--  -->
        <!-- 검색 form --><!-- id를 변경 -->
        <nav class="navbar navbar-light bg-light">
           <div class="dropdown event-dropdown ms-3">
@@ -85,12 +85,12 @@
 
 <script>
 
-//지영
+//
 // dropdown 메뉴가 보이기 직후에 호출되는 이벤트
 $('.event-dropdown').on('shown.bs.dropdown', function () {
 });
 
-//지영
+//
 // dropdown 메뉴가 사라진 직후에 호출되는 이벤트
 $('.event-dropdown').on('hidden.bs.dropdown ', function () {
 });

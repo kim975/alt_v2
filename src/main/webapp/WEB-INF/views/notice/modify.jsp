@@ -109,7 +109,7 @@ $(document).ajaxSend(function(e, xhr, options) {
 
 var formObj = $("#frmModify");
 
-//지영
+//
 //버튼동작
 $('button').on("click", function(e) {
 	e.preventDefault();
@@ -150,7 +150,7 @@ $('button').on("click", function(e) {
 	formObj.submit();
 });//END button
 
-//지영
+//
 //첨부파일 추가
 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 var maxSize = 5242880; //5MB
@@ -169,7 +169,7 @@ function checkExtension(fileName, fileSize){
   return true;
 }//END checkExtention
 
-//지영
+//
 //파일 업로드	
 //$("input[type='file']").change(function(e){
 $("#uploadFile").change(function(e){
@@ -200,7 +200,7 @@ $("#uploadFile").change(function(e){
 	});	//END ajax
 });//END change function
 
-//지영
+//
 //파일존재여부확인
 function showUploadResult(uploadResultArr) {
 	if(!uploadResultArr || uploadResultArr.length==0) { return;}
@@ -238,7 +238,7 @@ function showUploadResult(uploadResultArr) {
 	uploadUL.append(str);
 }//END showUploadResult
 
-//지영
+//
 //게시물 이미지 보여주거나 다운로드
 $(".uploadResult").on("click","li img,span", function(e){
 	console.log("view image");
@@ -253,7 +253,7 @@ $(".uploadResult").on("click","li img,span", function(e){
 	console.log("if문 : " + liObj.data);
 });//END uploadResult
 
-//지영
+//
 //다운로드된 원본이미지 표시 함수  
 function showImage(fileCallPath){
 	//alert(fileCallPath);
@@ -270,7 +270,7 @@ $(".bigPictureWrapper").on("click", function(e){
 		}, 1000);
 });
 
-//지영
+//
 //파일삭제 
 $(".uploadResult").on("click", "button", function(e){
 	console.log("delete file");
@@ -281,7 +281,7 @@ $(".uploadResult").on("click", "button", function(e){
 	}
 });//END function uploadResult	
 
-//지영
+//
 //첨부파일의 데이터를 가져옴
 $(document).ready(function() {
 		(function() {		

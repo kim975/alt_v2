@@ -5,7 +5,7 @@
  
 <mapper namespace="com.alt.mapper.VendorMapper">
 	
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 정보 출력 -->
 	<select id="listVendor" resultType="com.alt.domain.VendorVO">
 	<![CDATA[
@@ -13,7 +13,7 @@
 	]]>
 	</select>
 	
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 정보 수정 (비밀번호) -->
 	<update id="modifyPasswordVendor">
 	<![CDATA[
@@ -71,7 +71,7 @@
 	
 	<!-- ////////////////////////////////////////////////////////////////////////////////// -->
 	
-	<!-- 지영 -->
+	<!--  -->
 	<!-- 마이페이지-업체 정보 출력 -->
 	<select id="infoListVendor" resultType="com.alt.domain.VendorVO">
 	<![CDATA[
@@ -79,7 +79,7 @@
 	]]>
 	</select>
 	
-	<!-- 지영 -->
+	<!--  -->
 	<!-- 마이페이지-업체 정보 수정 -->
 	<update id="modifyVendor">
 	<![CDATA[
@@ -89,7 +89,7 @@
 	]]>
 	</update>
 	
-	<!-- 지영 -->
+	<!--  -->
 	<!-- 마이페이지-업체 탈퇴 -->
 	<update id="deleteVendor">
 		<![CDATA[
@@ -106,7 +106,7 @@
 	]]>
 	</delete>
 
-<!-- 지영 -->
+<!--  -->
 	<!-- 마이페이지-업체 판매 리스트 -->
 	<select id="saleListVendor" resultType="com.alt.domain.SaleBoardVO">
   	<![CDATA[
@@ -114,7 +114,7 @@
   	]]>
   	</select>
 	
-<!-- 지영 -->
+<!--  -->
 	<!-- 마이페이지-업체 주문 리스트 -->
 <!-- 	<select id="ordListVendor" resultType="com.alt.domain.OrdProductVO">
   	<![CDATA[
@@ -137,7 +137,7 @@
   	]]>
   	</select>
   	
-<!-- 지영 -->
+<!--  -->
 	<!-- 마이페이지-업체 주문 결제확인 -->
 	<update id="ordCheckVendor">
   	<![CDATA[
@@ -146,7 +146,7 @@
   	]]>
   	</update>
   	
-<!-- 지영 -->
+<!--  -->
 	<!-- 마이페이지-업체 주문 결제 검색 -->
 	<select id="ordSearchVendor" resultType="Map">
   	<![CDATA[
@@ -173,7 +173,7 @@
  	]]>
   	</select>
   	
-  	  	<!-- 성환 -->
+  	  	<!--  -->
     <!-- 마이페이지-주문 상세 목록 -->
     <!--  여기에 inner join 넣기 -->
     <select id="listOrdProduct" resultType="Map">

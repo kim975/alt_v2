@@ -25,7 +25,7 @@ public class VendorServiceImpl implements VendorService {
     })
     private VendorMapper vendorMapper;
 
-  //서영
+  //
 	//마이페이지 -회원 정보 수정(비밀번호)
 	@Override
 	public boolean modifyPasswordVendor(VendorVO vendorVO) {
@@ -38,7 +38,7 @@ public class VendorServiceImpl implements VendorService {
 		return vendorMapper.modifyPasswordVendor(vendorVO) ==1;
 	}
   	
-    //서영
+    //
 	//마이페이지 - 회원 정보 출력
 	@Override
 	public VendorVO listVendor(String vid) {
@@ -106,7 +106,7 @@ public class VendorServiceImpl implements VendorService {
 
 
 
-    //지영
+    //
     //마이페이지-업체 정보 출력
     @Override
     public VendorVO infoListVendor(String vid) {
@@ -114,7 +114,7 @@ public class VendorServiceImpl implements VendorService {
         return vendorMapper.infoListVendor(vid);
     }
 
-    //지영
+    //
     //마이페이지-업체 정보 수정
     @Override
     public boolean modifyVendor(VendorVO vendorVO) {
@@ -122,7 +122,7 @@ public class VendorServiceImpl implements VendorService {
         return vendorMapper.modifyVendor(vendorVO) == 1;
     }
 
-    //지영
+    //
     //마이페이지-업체 탈퇴 
     @Override
     public boolean deleteVendor(VendorVO vendorVO) {
@@ -130,7 +130,7 @@ public class VendorServiceImpl implements VendorService {
         return vendorMapper.deleteVendor(vendorVO) == 1; //만족하면 true 'T'
     }
     
-	//서영
+	//
 	//마이페이지 - 업체 탈퇴 권한 삭제
 	public boolean deleteVendorAuth(VendorAuthVO vendorauthVO) {
 		
@@ -142,14 +142,14 @@ public class VendorServiceImpl implements VendorService {
 		return vendorMapper.deleteVendorAuth(vendorauthVO) == 1;
 	}
 
-    //지영
+    //
     //마이페이지-업체 판매 리스트
     public List < SaleBoardVO > saleListVendor(String vid) {
         log.info("saleListVendor");
         return vendorMapper.saleListVendor(vid);
     }
 
-    //지영
+    //
     //마이페이지-업체 주문 리스트
     @Override
     public List < HashMap < String, String >> ordListVendor(String vid) {
@@ -157,21 +157,21 @@ public class VendorServiceImpl implements VendorService {
         return vendorMapper.ordListVendor(vid);
     }
 
-    //지영
+    //
     //마이페이지-업체 주문 결제확인
     public boolean ordCheckVendor(String ocode) {
         log.info("Service ordCheckVendor() : " + ocode);
         return vendorMapper.ordCheckVendor(ocode) == 1;
     }
 
-    //지영
+    //
     //마이페이지-업체 주문 결제 검색
     public List <HashMap<String, String>> ordSearchVendor(String vid, String type) {
         log.info("Service ordCheckVendor() : " + vid);
         return vendorMapper.ordSearchVendor(vid, type);
     }
     
-    //성환
+    //
  	//마이페이지 - 주문 상세 내역
  	public List<HashMap<String, String>> listOrdProduct(String ocode) {
  		

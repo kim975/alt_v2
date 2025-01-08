@@ -42,7 +42,7 @@ public class AdminController {
     @Autowired
     private VendorService vendorService;
     
-    //정민 
+    // 
     //관리자 페이지
     @GetMapping(value = "/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -85,7 +85,7 @@ public class AdminController {
         
     }
 
-    //정민
+    //
     //client 리스트  페이징 처리 
     @GetMapping(value = "/clientInfo")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -100,7 +100,7 @@ public class AdminController {
         return "admin/admin_info_client";
     }
 
-    //정민
+    //
     //client 삭제
     @GetMapping("/clientDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -112,7 +112,7 @@ public class AdminController {
 
     }
     
-    //정민
+    //
     //client업데이트
     @GetMapping("/clientUpdate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -134,7 +134,7 @@ public class AdminController {
         
     }
     
-    //정민
+    //
     //client Y 리스트 
     @GetMapping(value = "/clientListYPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -151,7 +151,7 @@ public class AdminController {
         
     }
     
-    //정민
+    //
     //client Y  삭제
     @GetMapping("/clientDeleteY")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -165,7 +165,7 @@ public class AdminController {
 
     }
 
-    //정민
+    //
     //client R 리스트 
     @GetMapping(value = "/clientListRPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -182,7 +182,7 @@ public class AdminController {
         
     }
 
-    //정민
+    //
     // client R  삭제
     @GetMapping("/clientDeleteR")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -196,7 +196,7 @@ public class AdminController {
 
     }
 
-    //정민
+    //
     //vendor 리스트 
     @GetMapping(value = "/vendorListPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -213,7 +213,7 @@ public class AdminController {
         return "admin/admin_info_vendor";
     }
 
-    //정민
+    //
     // vendor 삭제
     @GetMapping("/vendorDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -227,7 +227,7 @@ public class AdminController {
 
     }
     
-    //정민
+    //
     //vendor업데이트
     @GetMapping("/vendorUpdate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -249,7 +249,7 @@ public class AdminController {
         
     }
 
-    //정민
+    //
     //vendor Y 리스트 
     @GetMapping(value = "/vendorListYPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -266,7 +266,7 @@ public class AdminController {
         
     }
 
-    //정민
+    //
     // vendor Y  삭제
     @GetMapping("/vendortDeleteY")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -280,7 +280,7 @@ public class AdminController {
 
     }
     
-    //정민
+    //
     //vendor R 리스트 
     @GetMapping(value = "/vendorListRPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -297,7 +297,7 @@ public class AdminController {
         
     }
     
-    //정민
+    //
     //vendor R  삭제
     @GetMapping("/vendortDeleteR")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -311,7 +311,7 @@ public class AdminController {
 
     }
     
-    //정민
+    //
     //product 리스트 
     @GetMapping(value = "/productList")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -328,7 +328,7 @@ public class AdminController {
         
     }
     
-    //정민
+    //
     //product 등록 호출
     @GetMapping(value = "/product_register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -340,7 +340,7 @@ public class AdminController {
         
     }
 
-    //정민
+    //
     //product 등록
     @PostMapping("/registerProduct")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -356,7 +356,7 @@ public class AdminController {
 
     }
     
-    //정민
+    //
     //판매 리스트 
     @GetMapping(value = "/saleList")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -373,7 +373,7 @@ public class AdminController {
         
     }
     
-    //정민
+    //
     //vendor R  삭제
     @GetMapping("/saleListDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

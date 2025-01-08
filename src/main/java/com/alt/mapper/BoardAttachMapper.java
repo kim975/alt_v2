@@ -12,7 +12,7 @@ public interface BoardAttachMapper {
 	
 	public void insertReplyImage(ReplyImgVO replyImgVO);
 	
-	//용민
+	//
 	public void insertThumb(SaleThumbImgVO vo);
 	
 	public void delete(String uuid);

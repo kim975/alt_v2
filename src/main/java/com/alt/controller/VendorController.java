@@ -34,13 +34,13 @@ public class VendorController {
 
 	private VendorService vendorService;
 	
-	//지영
+	//
 	//마이페이지 목록
 	@GetMapping("/vendor/mypage")
 	public void vendorMypage() {
 	}
 	
-	   //서영
+	   //
 			//마이페지이 - 회원 정보 비밀번호 수정
 			//@PreAuthorize("principal.username == #clientVO.cid")
 			@PostMapping("/vendor/modifyPassword")
@@ -64,7 +64,7 @@ public class VendorController {
 				return "redirect:/vendor/loginForm" ;
 				
 			}
-    //서영
+    //
 	//마이페지이 - 회원 리스트 출력
 	//@PreAuthorize("principal.username == #clientVO.cid")
 	@GetMapping("/vendor/mypage_update_password")
@@ -77,7 +77,7 @@ public class VendorController {
 		
 	}
 	
-	//지영
+	//
 	//마이페이지-업체 정보 출력(/info /modify /delete) get
 	//@PreAuthorize("principal.username == #vendorVO.vid")
 	@GetMapping({"/mypage_info","/mypage_modify","/mypage_delete"})
@@ -86,7 +86,7 @@ public class VendorController {
 		model.addAttribute("vendor", vendorService.infoListVendor(vid));
 	}
 	
-	//지영
+	//
 	//마이페이지-업체 정보 수정 post
 	//@PreAuthorize("principal.username == #vendorVO.vid")
 	@PostMapping("/modify")
@@ -99,7 +99,7 @@ public class VendorController {
 		return "redirect:/vendor/mypage";
 	}
 
-	//지영
+	//
 	//마이페이지-업체 탈퇴 post
 	//@PreAuthorize("principal.username == #vendorVO.vid")
 	@PostMapping("/delete")
@@ -129,7 +129,7 @@ public class VendorController {
 		
 	}
 	
-	//지영
+	//
 	//마이페이지-업체 판매글 리스트
 	@GetMapping("/mypage_salelist")
 	public void saleListVendor(@RequestParam(value="vid") String vid, Model model) {
@@ -137,7 +137,7 @@ public class VendorController {
 		model.addAttribute("salelist", vendorService.saleListVendor(vid));
 	}
 	
-	//지영
+	//
 	//마이페이지-업체 주문 리스트(검색)
 //	@GetMapping("/mypage_orderlist")
 //	public void ordListVendor(@RequestParam(value="vid") String vid, 
@@ -166,7 +166,7 @@ public class VendorController {
 		
 	}
 
- 	//지영
+ 	//
  	//마이페이지-업체 주문 결제확인
 	//session을 보내서 vid 값 불러옴
 	//Required String parameter 'vid' is not present(ordlist에는 vid 필요)
@@ -185,7 +185,7 @@ public class VendorController {
  		
  	}
 	
-	//성환
+	//
 	//마이페이지 - 회원 주문 목록 - 상세 주문 내역
 	@GetMapping("/vendor/mypage_ordercode")
 	public void listOrdProduct(@RequestParam(value="ocode", required=false) String ocode, Model model) {

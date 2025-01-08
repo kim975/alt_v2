@@ -62,13 +62,13 @@ public class HomeController {
 //		return "/client/jusoPopup";
 //	}
 	
-	//서영
+	//
 //	@RequestMapping(value = "/mypage_update", method = RequestMethod.GET)
 //	public String mypage_update(Locale locale, Model model) {
 //		return "client/mypage_update";
 //	}
 	
-	//서영
+	//
 	@RequestMapping(value = "/mypage_delete", method = RequestMethod.GET)
 	public String mypage_delete(Locale locale, Model model) {
 		return "client/mypage_delete";

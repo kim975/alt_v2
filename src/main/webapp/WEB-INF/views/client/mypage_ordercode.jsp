@@ -179,12 +179,12 @@
 
  
  
-//지영
+//
 // dropdown 메뉴가 보이기 직후에 호출되는 이벤트
 $('.event-dropdown').on('shown.bs.dropdown', function () {
 });
 
-//지영
+//
 // dropdown 메뉴가 사라진 직후에 호출되는 이벤트
 $('.event-dropdown').on('hidden.bs.dropdown ', function () {
 });

@@ -40,7 +40,7 @@ public class LoginController {
 //	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 
-	//서영
+	//
 	//로봇이 아닙니다.
     @ResponseBody
     @RequestMapping(value = "/VerifyRecaptcha", method = RequestMethod.POST)
@@ -59,7 +59,7 @@ public class LoginController {
         }
     }
 
-	//서영
+	//
 	//회원가입 약관 동의 (회원)
 	@GetMapping(value="/sign_check_client")
 	public String client_sign_check() {
@@ -68,7 +68,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//회원가입 약관 동의 (업체)
 	@GetMapping(value="/sign_check_vendor")
 	public String vendor_sign_check() {
@@ -77,7 +77,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//회원 가입 입력 창 (회원)
 	@PostMapping(value="/sign_client")
 	public String client_sign() {
@@ -87,7 +87,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//회원 가입 입력 창 (업체)
 	@PostMapping(value="/sign_vendor")
 	public String vendor_sign() {
@@ -97,7 +97,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//회원 가입 (회원)
 	@PostMapping("/client_join")
 	public String client_join (ClientVO clientVO, ClientAuthVO clientAuthVO) {
@@ -114,7 +114,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//아이디 중복 체크 (회원)
 	@ResponseBody
 	@GetMapping("/idCheck") 
@@ -135,7 +135,7 @@ public class LoginController {
      return idCheck;
 	}
 	
-	//서영
+	//
 	//닉네임 중복 체크 (회원)
 	@ResponseBody
 	@GetMapping("/nickCheck") 
@@ -155,7 +155,7 @@ public class LoginController {
      return nickCheck;
 	}
 	
-	//서영
+	//
 	//전화번호 중복 체크 (회원)
 	@ResponseBody
 	@GetMapping("/phoneCheck_client") 
@@ -175,7 +175,7 @@ public class LoginController {
      return phoneCheck_client;
 	}	
 	
-	//서영
+	//
 	//회원가입 (업체)
 	@PostMapping("/vendor_join")
 	public String vendor_join (VendorVO vendorVO, VendorAuthVO vendorAuthVO) {
@@ -192,7 +192,7 @@ public class LoginController {
 		
 	}
 	
-	//서영
+	//
 	//아이디 중복 체크 (업체)
 	@ResponseBody
 	@GetMapping("/vendoridCheck") 
@@ -213,7 +213,7 @@ public class LoginController {
      return vendoridCheck;
 	}
 
-	//서영
+	//
 	//업체이름 중복 체크 (업체)
 	@ResponseBody
 	@GetMapping("/vendorName") 
@@ -233,7 +233,7 @@ public class LoginController {
      return vendorName;
 	}	 
 	
-	//서영
+	//
 	//업체 사업자 등록 번호 중복 체크 (업체)
 	@ResponseBody
 	@GetMapping("/vendorNoCheck") 
@@ -254,7 +254,7 @@ public class LoginController {
      
 	}	
 	
-	//서영
+	//
 	//업체 전화번호 중복 체크 (업체)
 	@ResponseBody
 	@GetMapping("/phoneCheck_vendor") 

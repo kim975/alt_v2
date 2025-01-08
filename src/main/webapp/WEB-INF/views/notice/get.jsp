@@ -102,24 +102,24 @@
 
 <script type="text/javascript">
 
-//지영
+//
 //게시글 동작처리
 var frmToModify = $("#frmToModify");
 
-//지영
+//
 //수정버튼
 $("#btnModify").on("click", function(e) {
 	operForm.attr("action","/notice/modify").submit();
 });
 
-//지영
+//
 //페이징 고려
 $("#btnModify").on("click", function(e) {
 	operForm.find("#nno").remove();
 	operForm.attr("action","/notice/list").submit(); 
 });
 
-//지영
+//
 //첨부파일
 //게시물 이미지 보여주거나 다운로드
 $(".uploadResult").on("click","li", function(e){
@@ -133,7 +133,7 @@ $(".uploadResult").on("click","li", function(e){
 	}
 });//END uploadResult
 
-//지영
+//
 //다운로드된 원본이미지 표시 함수  
 function showImage(fileCallPath){
 	//alert(fileCallPath);
@@ -150,7 +150,7 @@ $(".bigPictureWrapper").on("click", function(e){
 		}, 1000);
 });
 
-//지영
+//
 //첨부파일의 데이터를 가져옴(즉시실행 함수로 처리)
 $(document).ready(function() {
 	(function() {		

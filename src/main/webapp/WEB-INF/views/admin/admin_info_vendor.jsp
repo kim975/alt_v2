@@ -163,7 +163,7 @@ a {
  
 				<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 				<script>
-				/* 정민 */
+				/*  */
 				//페이징 고려
 				var actionForm = $("#actionForm");
 				
@@ -175,7 +175,7 @@ a {
 					actionForm.submit();
 				});
 				
-				/* 정민 */
+				/*  */
 				/* 검색조건 */
 				var searchForm = $("#searchForm");
 				

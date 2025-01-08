@@ -38,7 +38,7 @@ public class ChatRoomVO {
 		this.roomdate = roomdate;
 	}
 	
-	//지영
+	//
 	//웹소켓 입퇴장
     public void handleMessage(WebSocketSession session, ChatMsgVO chatMessage,
                               ObjectMapper objectMapper) throws IOException {

@@ -118,7 +118,7 @@
                         </sec:authorize>
                         
 		                <sec:authorize access="hasAnyRole('ROLE_VENDOR','ROLE_CLIENT','ROLE_ADMIN')">
-			                <!-- 지영 -->
+			                <!--  -->
 			                <!-- chat -->
 							<li><a href="" onclick="javascript:window.open('/room','new','left=50, top=50, width=450, height=700')"><img src="/resources/assets/img/chat-2389223_1280.png" style="width:35px; height:35px;"></a></li>
 		            	</sec:authorize>

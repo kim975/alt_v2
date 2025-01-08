@@ -37,7 +37,7 @@ public class ClientController {
 	      this.clientService = clientService;
 	   }
 	   
-		//서영
+		//
 	   @GetMapping(value="/client/mypage")
 		public String loginForm() {
 			
@@ -52,7 +52,7 @@ public class ClientController {
 			
 		}
 			
-	    //서영
+	    //
 		//마이페지이 - 회원 정보 출력
 		@GetMapping("/client/mypage_info")
 		public void listClient(@RequestParam(value="cid", required=false)  String cid, Model model) {
@@ -64,7 +64,7 @@ public class ClientController {
 			
 		}
 		
-	    //서영
+	    //
 		//마이페이지 - 회원 리스트 출력
 
 		@GetMapping("/client/mypage_update")
@@ -77,7 +77,7 @@ public class ClientController {
 			
 		}
 		
-	    //서영
+	    //
 		//마이페지이 - 회원 리스트 출력
 		//@PreAuthorize("principal.username == #clientVO.cid")
 		@GetMapping("/client/mypage_update_password")
@@ -90,7 +90,7 @@ public class ClientController {
 			
 		}
 	   
-	    //서영
+	    //
 		//마이페지이 - 회원 정보 수정
 		@PostMapping("/client/modify")
 		public String modify( ClientVO clientVO, RedirectAttributes rttr) {
@@ -103,7 +103,7 @@ public class ClientController {
 			
 		}
 		
-	    //서영
+	    //
 		//마이페지이 - 회원 정보 비밀번호 수정
 		@PostMapping("/client/modifyPassword")
 		public String modifyPassword(ClientVO clientVO, RedirectAttributes rttr, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -127,7 +127,7 @@ public class ClientController {
 			
 		}
 		
-		//서영
+		//
 		//회원삭제
 		//마이페이지 - 회원 탈퇴
 		@PostMapping("/delete")
@@ -160,7 +160,7 @@ public class ClientController {
 			return "redirect:/";
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 주문 목록
 		@GetMapping("/client/mypage_zimlist")
 		public void listZim(@RequestParam(value="cid", required=false)  String cid, Model model) {
@@ -188,7 +188,7 @@ public class ClientController {
 				
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 주문 목록 - 검색
 		@GetMapping("/client/mypage_orderlist")
 		public void listOrd(@RequestParam(value="cid", required=false)  String cid, @RequestParam(value = "type", required = false) String type, Model model) {

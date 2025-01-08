@@ -24,21 +24,21 @@ public class ChatService {
 	
 	/////////////////채팅방
 	
-	//지영
+	//
 	//채팅방 id 확인
 	public int selectRoomCheck(String cid, String vid) {
 		log.info("ChatService selectRoom : " + cid + vid);
 		return chatMapper.selectRoomCheck(cid, vid);
 	}
 	
-	//지영
+	//
 	//채팅방 id 확인
 	public String selectRoom(String cid, String vid) {
 		log.info("ChatService selectRoom : " + cid + vid);
 		return chatMapper.selectRoom(cid, vid);
 	}
 
-	//지영
+	//
 	//채팅방 생성
 	//@Transactional
 	public void createRoom(ChatRoomVO chatRoomVO) {
@@ -56,7 +56,7 @@ public class ChatService {
 		return chatMapper.selectClientChatRoom(cid);
 	}
 	
-	//지영
+	//
 	//채팅방 삭제	- 채팅내용포함
 	//@Transactional
 	public int removeRoom(@Param("cid") String cid,@Param("vid") String vid) {

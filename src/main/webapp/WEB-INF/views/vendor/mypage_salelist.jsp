@@ -60,7 +60,7 @@
 </section><!-- End mypage -->
 
 <script>
-//지영
+//
 //saleboard 글번호 상세페이지로 이동(url 확인해야함)
 /* $(".move").on("click",function(e) {
 	e.preventDefault();

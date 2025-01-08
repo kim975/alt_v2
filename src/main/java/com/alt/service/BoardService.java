@@ -31,61 +31,61 @@ public class BoardService {
 	@Setter(onMethod_ = {@Autowired})
 	private BoardAttachMapper boardAttachMapper;
 	
-	//용민
+	//
 	public List<SaleBoardVO> getList(Criteria cri) {
 
 		return boardMapper.getListPaging(cri);
 	}
 	
-	//용민
+	//
 	public List<SaleThumbImgVO> selectSaleBoardThumbImage(List<Integer> snoList) {
 		
 		return boardMapper.selectSaleBoardThumbImage(snoList);
 	}
 	
-	//용민
+	//
 	public List<SaleImgVO> selectSaleBoardImamge(int sno) {
 		
 		return boardMapper.selectSaleBoardImamge(sno);
 	}
 	
-	//용민
+	//
 	public int getTotalCount() {
 		
 		return boardMapper.selecTotalCount();
 	}
 	
-	//용민
+	//
 	public SaleBoardVO getSaleDetail(int sno) {
 		
 		return boardMapper.getSaleDetail(sno);
 	}
 	
-	//용민
+	//
 	public int insertBasket(BasketVO basketVO) {
 		
 		return boardMapper.insertBasket(basketVO);
 	}
 	
-	//용민
+	//
 	public List<BasketVO> selectBasketList(String cid) {
 		
 		return boardMapper.selectBasketList(cid);
 	}
 	
-	//용민
+	//
 	public List<HashMap<String, String>> selectBasketListSaleBoard(String cid) {
 		
 		return boardMapper.selectBasketListSaleBoard(cid);
 	}
 	
-	//용민
+	//
 	public int deleteBasket(String bcode) {
 		
 		return boardMapper.deleteBasket(bcode);
 	}
 	
-	//용민
+	//
 	public int selectBasketTotalPrice(String cid) {
 		
 		Integer totalPrice = boardMapper.selectBasketTotalPrice(cid); 
@@ -98,7 +98,7 @@ public class BoardService {
 		return totalPrice;
 	}
 	
-	//용민
+	//
 	public int insertZim(ZimVO zimVO) {
 		
 		Integer result = 0;
@@ -114,7 +114,7 @@ public class BoardService {
 		return result;
 	}
 	
-	//용민
+	//
 	public String selectZim(ZimVO zimVO) {
 		
 		if (boardMapper.selectZim(zimVO) == 1) {
@@ -127,7 +127,7 @@ public class BoardService {
 		
 	}
 	
-	//용민
+	//
 	public void register(SaleBoardVO saleBoardVO) {
 		
 		log.info("Service의 register.......:" + saleBoardVO);
@@ -151,7 +151,7 @@ public class BoardService {
 		
 	}
 	
-	//용민
+	//
 	//상품 수정
 	public void modifyProduct(SaleBoardVO saleBoardVO) {
 		
@@ -182,14 +182,14 @@ public class BoardService {
 		
 	}
 	
-	//용민
+	//
 	//상품 삭제 sdelete = Y로
 	public void removeProduct(int sno) {
 		
 		boardMapper.updateRemoveProduct(sno);
 	}
 	
-	//용민
+	//
 	//결제 물품 등록
 	public void insertProductPay(OrdVO ordVO) {
 		
@@ -211,28 +211,28 @@ public class BoardService {
 		boardMapper.deleteBasketAll(ordVO.getCid());
 	}
 	
-	//용민
+	//
 	//별 개수
 	public List<HashMap<String, String>> selectCountStar(int sno) {
 		
 		return boardMapper.selectCountStar(sno);
 	}
 	
-	//용민
+	//
 	//게시판 별 개수
 	public List<HashMap<String, String>> selectSaleBoardStar(List<Integer> snoList) {
 		
 		return boardMapper.selectSaleBoardStar(snoList);
 	}
 	
-	//용민
+	//
 	//product code 가져오기
 	public List<ProductVO> selectPcode() {
 		
 		return boardMapper.selectPcode();
 	}
 	
-	//용민
+	//
 	//상의서 insert
 	public void insertConfer(OrdVO ordVO, OrdProductVO ordProductVO) {
 		

@@ -87,7 +87,7 @@
 var frmRegister = $("#frmRegister");
 
 
-//지영
+//
 //첨부파일 버튼동작
 $("#btnSubmit").on("click", function(e){
 	e.preventDefault();
@@ -107,14 +107,14 @@ $("#btnSubmit").on("click", function(e){
 	//alert("str : " + str);
 });
 
-//지영
+//
 //페이징 고려
 $("#btnList").on("click", function(e) {
 	operForm.find("#nno").remove();
 	operForm.attr("action","/notice/list").submit(); 
 });
 
-//지영
+//
 //파일업로드시 고려사항
 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 var maxSize = 5242880; //5MB
@@ -145,7 +145,7 @@ var csrfTokenValue = "${_csrf.token}";
 console.log("csrfHeaderName의 값 ---> " + csrfHeaderName);
 console.log("csrfTokenValue의 값 ---> " + csrfTokenValue);
 
-//지영
+//
 //파일 업로드	
 $("#uploadFile").change(function(e){
 	var formData = new FormData();
@@ -215,7 +215,7 @@ function showUploadResult(uploadResultArr){
 	uploadUL.append(str);
 }//END showUploadResult
 
-//지영
+//
 //파일삭제
 $(".uploadResult").on("click", "button", function(e){
 	console.log("delete file");

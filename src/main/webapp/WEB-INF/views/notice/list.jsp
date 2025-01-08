@@ -218,7 +218,7 @@ a {
 
 <script type="text/javascript">
 
-//지영
+//
 //페이지 동작
 window.addEventListener('popstate',function(event){
 	history.pushState(null,null,location.href);
@@ -231,7 +231,7 @@ $(document).ready(function() {
 	history.pushState(null,null,location.href);
 });
 
-//지영
+//
 //처리완료 modal
 function checkModal(result) {
 	if (result==='' || history.state) {
@@ -256,7 +256,7 @@ $(".paginate_button a").on("click", function(e) {
 	actionForm.submit();
 });
 
-//지영
+//
 //get페이지 이동
  $(".toGet").on("click",function(e) {
 	e.preventDefault();
@@ -265,7 +265,7 @@ $(".paginate_button a").on("click", function(e) {
 	actionForm.submit();
 });
 
-//지영
+//
 //검색
 var searchForm = $("#searchForm");
 

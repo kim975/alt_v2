@@ -28,7 +28,7 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private AdminMapper adminMapper;
 	
-	//정민
+	//
 	//client 페이징 리스트 
 		@Override
 		public List<ClientVO> clientListPaging(Criteria cri){
@@ -39,7 +39,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.clientListPaging(cri);
 			}
 		}
-	//정민
+	//
 	// client 총 수
 		@Override
 		public int getTotaleCountC(Criteria cri) {
@@ -47,7 +47,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.getTotaleCountC(cri);
 		}
 	
-	//정민
+	//
 	// client 삭제
 		@Override
 		public int clientDelete(String cid) {
@@ -55,14 +55,14 @@ public class AdminServiceImpl implements AdminService{
 			
 			return adminMapper.clientDelete(cid);
 		}
-	//정민
+	//
 	//client업데이트
 		@Override
 		public boolean clientUpdate(String cid) {
 			log.info("clientUpdate :" + cid);
 			return adminMapper.clientUpdate(cid);
 		}
-	//정민
+	//
 	//client Y 리스트 
 		@Override
 		public List<ClientVO> clientListYPaging(Criteria cri){
@@ -73,14 +73,14 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.clientListYPaging(cri);
 			}
 		}
-	//정민
+	//
 	// clientY 총 수
 		@Override
 		public int getTotaleCountYC(Criteria cri) {
 			log.info("getTotaleCountYC : " + cri );
 			return adminMapper.getTotaleCountYC(cri);
 		}
-	//정민
+	//
 	//client Y 삭제 
 		@Override
 		public int clientDeleteY(String cid){
@@ -88,7 +88,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.clientDeleteY(cid);
 		}
 		
-		//정민
+		//
 		//clientR 리스트 
 			@Override
 			public List<ClientVO> clientListRPaging(Criteria cri){
@@ -99,7 +99,7 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.clientListRPaging(cri);
 				}
 			}
-		//정민
+		//
 		// client R총 수
 			@Override
 			public int getTotaleCountRC(Criteria cri) {
@@ -107,7 +107,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.getTotaleCountRC(cri);
 			}
 		 
-	//정민
+	//
 	//client R 삭제 
 		@Override
 		public int clientDeleteR(String cid){
@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.clientDeleteR(cid);
 		}	
  
-	//정민
+	//
 	//vendor R 리스트 
 		@Override
 		public List<VendorVO> vendorListPaging(Criteria cri){
@@ -126,7 +126,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.vendorListPaging(cri);
 			}
 		}
-	//정민
+	//
 	//vendor R 총 수
 		@Override
 		public int getTotaleCountV(Criteria cri) {
@@ -135,7 +135,7 @@ public class AdminServiceImpl implements AdminService{
 		}
 	
 	
-	//정민
+	//
 	// vendor 삭제
 	    @Override
 		public int vendorDelete(String vid) {
@@ -143,7 +143,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.vendorDelete(vid);
 			
 		}
-	//정민
+	//
 	//vendor업데이트
 		@Override
 		public boolean vendorUpdate(String vid) {
@@ -151,7 +151,7 @@ public class AdminServiceImpl implements AdminService{
 			return adminMapper.vendorUpdate(vid);
 		}
 		
-		//정민
+		//
 		//vendor Y 리스트 
 			@Override
 			public List<VendorVO> vendorListYPaging(Criteria cri){
@@ -162,7 +162,7 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.vendorListYPaging(cri);
 				}
 			}
-		//정민
+		//
 		// clientY 총 수
 			@Override
 			public int getTotaleCountYV(Criteria cri) {
@@ -171,7 +171,7 @@ public class AdminServiceImpl implements AdminService{
 			}
 		
 		
-		//정민	
+		//	
 		//vendor Y 삭제 
 			@Override
 			public int vendortDeleteY(String vid){
@@ -179,7 +179,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.vendortDeleteY(vid);
 			}
  
-		//정민
+		//
 		//vendor Y 리스트 
 			@Override
 			public List<VendorVO> vendorListRPaging(Criteria cri){
@@ -190,7 +190,7 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.vendorListRPaging(cri);
 				}
 			}
-		//정민
+		//
 		// clientY 총 수
 			@Override
 			public int getTotaleCountRV(Criteria cri) {
@@ -198,7 +198,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.getTotaleCountRV(cri);
 			}
 
-		//정민	
+		//	
 		//vendor R 삭제 
 			@Override
 			public int vendortDeleteR(String vid){
@@ -206,7 +206,7 @@ public class AdminServiceImpl implements AdminService{
 				return adminMapper.vendortDeleteR(vid);
 			}
 			
-			//정민
+			//
 			// client 총 수
 			@Override
 				public int clientCount() {
@@ -214,28 +214,28 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.clientCount();
 				}
 			
-			//정민
+			//
 			// vendor 총 수
 			@Override
 				public int vendorCount() {
 					log.info("vendorCount Service : " );
 					return adminMapper.vendorCount();
 				}
-			//정민
+			//
 			// 탈퇴 총 수
 			@Override
 				public int deleteSum() {
 					log.info("deleteSum Service : " );
 					return adminMapper.deleteSum();
 			}
-			//정민
+			//
 			// 신고 총 수
 			@Override
 				public int reportSum() {
 					log.info("reportSum Service : " );
 					return adminMapper.reportSum();
 			}
-			//정민
+			//
 			//업체 지역 비율
 			@Override
 			public List<RtoVO> vendorRto(){
@@ -244,14 +244,14 @@ public class AdminServiceImpl implements AdminService{
 				
 			}
 			
-			//정민
+			//
 			//product 리스트
 			@Override
 			public List<ProductVO> productListPaging(Criteria cri){
 				log.info("productList"+ cri );
 				return adminMapper.productListPaging(cri);
 			}
-			//정민
+			//
 			//product 등록
 			@Override
 			public void registerProduct(ProductVO productVO) {
@@ -259,7 +259,7 @@ public class AdminServiceImpl implements AdminService{
 				adminMapper.registerProduct(productVO);
 			}
 			
-			//정민
+			//
 			// vendor 총 수
 			@Override
 				public int getProductCount(Criteria cri) {
@@ -267,7 +267,7 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.getProductCount( cri);
 				}	
 		 
-				//정민
+				//
 				//product 리스트 chart
 				@Override
 				public List<ChartVO> orderChart(){
@@ -275,33 +275,33 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.orderChart();
 				}
 
-				//정민
+				//
 				//회원 추가 리스트 chart
 				@Override
 				public List<ClientChartVO> clientChart(){
 					log.info("clientChart" );
 					return adminMapper.clientChart();
 				}
-				//정민
+				//
 				// 회원 삭제 차트
 				@Override
 				public List<ClientChartVO> clientChartD(){
 					log.info("clientChartD" );
 					return adminMapper.clientChartD();
 				}
-				//정민
+				//
 				// 업체량 차트
 				public List<VendorChartVO> vendorChart(){
 					log.info("vendorChart" );
 					return adminMapper.vendorChart();
 				}
-				//정민
+				//
 				// 업체삭제양 차트
 				public List<VendorChartVO> vendorChartD(){
 					log.info("vendorChartD" );
 					return adminMapper.vendorChartD();
 				}
-				//정민
+				//
 				// 업체삭제양 차트
 				public List<TotalPriceVO> totalPrice(){
 					log.info("totalPrice" );
@@ -310,14 +310,14 @@ public class AdminServiceImpl implements AdminService{
 				
 				
 
-				//정민
+				//
 				// vendor 총 수
 				@Override
 				public int totalsaleboard() {
 					log.info("totalsaleboard Service : " );
 					return adminMapper.totalsaleboard();
 				}
-				//정민
+				//
 				// vendor 총 수
 				@Override
 				public int totalOrd() {
@@ -325,14 +325,14 @@ public class AdminServiceImpl implements AdminService{
 					return adminMapper.totalOrd();
 				}
 				
-				//정민
+				//
 				//판매게시판 리스트 
 				public List<SaleBoardVO> saleList(Criteria cri){
 					log.info("saleList Service : " );
 					return adminMapper.saleList(cri);
 				}
 				
-				//정민	
+				//	
 				//판매게시판 삭제 
 					@Override
 					public int saleListDelete(String sno){
@@ -340,7 +340,7 @@ public class AdminServiceImpl implements AdminService{
 						return adminMapper.saleListDelete(sno);
 					}
 					
-					//정민
+					//
 					// 판매게시판총 수
 						@Override
 						public int saleListCount(Criteria cri) {

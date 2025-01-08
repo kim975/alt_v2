@@ -25,7 +25,7 @@
 	  </trim>
 	 </sql> 
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!--  회원정보 리스트 페이징  -->
 	<select id="clientListPaging" resultType="com.alt.domain.ClientVO">
 	   <![CDATA[
@@ -47,7 +47,7 @@
 	  ]]>
 	</select>  
 	
-	<!-- 정민 --> 
+	<!--  -->
 	<!-- 회원 갯수 -->
 	<select id="getTotaleCountC" resultType="int">
 		select Count(*) from alt.client
@@ -59,18 +59,18 @@
 
 	</select>
 	
-	 <!--   정민   client 삭제 -->
+	 <!--      client 삭제 -->
    <delete id="clientDelete" parameterType="String" >
 	 	delete from alt.client  where cid=#{cid}
 	 </delete>  
 	  
-	  <!--   정민   client 업데이트 -->
+	  <!--      client 업데이트 -->
 	  <update id="clientUpdate">
 	  		update alt.client
 	  		set  cdelete='N' where  cid=#{cid}
 	  </update>
 	 
-	 <!-- 정민   client Y 여부 페이징 -->
+	 <!--    client Y 여부 페이징 -->
 	 <select id="clientListYPaging" resultType="com.alt.domain.ClientVO">
 	   <![CDATA[
 	    SELECT
@@ -89,7 +89,7 @@
 	  ]]>
 	</select> 
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- client Y  갯수 -->
 	<select id="getTotaleCountYC" resultType="int">
 		select Count(*) from alt.client
@@ -98,12 +98,12 @@
 		cdelete = 'Y'
 	</select>
 	 
-	  <!--  정민    client Y 삭제 -->
+	  <!--      client Y 삭제 -->
      <delete id="clientDeleteY" parameterType="String" >
 	 	delete from alt.client  where cid=#{cid} 
 	 </delete>  
 	 
-	  <!-- 정민   client R 여부 페이징 -->
+	  <!--    client R 여부 페이징 -->
 	 <select id="clientListRPaging" resultType="com.alt.domain.ClientVO">
 	   <![CDATA[
 	    SELECT
@@ -124,7 +124,7 @@
 	  ]]>
 	</select> 
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- client R  갯수 -->
 	<select id="getTotaleCountRC" resultType="int">
 		select Count(*) from alt.client
@@ -136,7 +136,7 @@
 
 	</select>
 	 
-	  <!--  정민    client R 삭제 -->
+	  <!--      client R 삭제 -->
      <delete id="clientDeleteR" parameterType="String" >
 	 	delete from alt.client  where cid=#{cid} 
 	 </delete>  
@@ -163,7 +163,7 @@
 	  </trim>
 	 </sql> 
 	  
-	   <!--  정민    vendor 리스트  페이징-->
+	   <!--      vendor 리스트  페이징-->
 	  	<select id="vendorListPaging" resultType="com.alt.domain.VendorVO">
 	   <![CDATA[
 	      SELECT
@@ -184,7 +184,7 @@
 	  ]]>
 	</select>  
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- vendor 갯수 -->
 	<select id="getTotaleCountV" resultType="int">
 		select Count(*) from alt.vendor  
@@ -196,18 +196,18 @@
 
 	</select>
 	   
-	 <!--  정민    vendor 삭제 -->
+	 <!--      vendor 삭제 -->
 	 <delete id="vendorDelete" parameterType="String">
 	 	delete from alt.vendor  where vid=#{vid}   
 	 </delete>
 	 
-	   <!--  정민    vendor 업데이트 -->
+	   <!--      vendor 업데이트 -->
 	  <update id="vendorUpdate">
 	  		update alt.vendor
 	  		set  vdelete='N' where  vid=#{vid}
 	  </update>
 	  
-	  <!--  정민    vendor Y 여부  리스트-->
+	  <!--      vendor Y 여부  리스트-->
 	 
 	 <select id="vendorListYPaging" resultType="com.alt.domain.VendorVO">
 	   <![CDATA[
@@ -228,7 +228,7 @@
 		where rn >= ( #{pageNum} - #{amount} ) * #{amount}
 	  ]]>
 	</select>
-   <!-- 정민 -->
+   <!--  -->
 	<!-- vendor Y  갯수 -->
 	<select id="getTotaleCountYV" resultType="int">
 		select Count(*) from alt.vendor
@@ -241,12 +241,12 @@
 	</select>
 	 
 	 
-	   <!--  정민    vendor Y 삭제 -->
+	   <!--      vendor Y 삭제 -->
      <delete id="vendortDeleteY" parameterType="String" >
 	 	delete from alt.vendor    where vid=#{vid}   
 	 </delete> 
 	 
-	 <!--   정민   vendor R 여부 -->
+	 <!--      vendor R 여부 -->
 	  <select id="getVendorListR" resultType="com.alt.domain.VendorVO">
 	 	select * from alt.vendor where vreport > 0 
 	 </select>
@@ -270,7 +270,7 @@
 		where rn > ( #{pageNum} - 1 ) * #{amount}
 	  ]]>
 	</select>
-   <!-- 정민 -->
+   <!--  -->
 	<!-- vendor R 총갯수 -->
 	<select id="getTotaleCountRV" resultType="int">
 		select Count(*) from alt.vendor
@@ -282,17 +282,17 @@
 
 	</select>
 	 
-	  <!--  정민    vendor R 삭제 -->
+	  <!--      vendor R 삭제 -->
      <delete id="vendortDeleteR" parameterType="String" >
 	 	delete from alt.vendor where vid=#{vid}   
 	 </delete>
    
-	   <!-- 정민 client 총수 -->
+	   <!--  client 총수 -->
 	 <select id ="clientCount" resultType="int">
 	   select Count(*) from alt.client
 	 </select>
 	 
-	   <!-- 정민 vendor 총수 -->
+	   <!--  vendor 총수 -->
 	 <select id ="vendorCount" resultType="int">
 	   select Count(*) from alt.vendor
 	 </select>
@@ -307,7 +307,7 @@
 			)
 	 </select>
 	 
-	  <!--  정민 회원 업체 신고 수 총합 -->
+	  <!--   회원 업체 신고 수 총합 -->
 	<select id ="reportSum" resultType="int">
 		 SELECT SUM( a_report)
 			FROM (
@@ -317,7 +317,7 @@
 			)
 	</select> 
 	
-	<!--  정민 vendor 지역 비율 -->
+	<!--   vendor 지역 비율 -->
 	<select id="vendorRto" resultType="com.alt.domain.RtoVO">
 			SELECT     A.CityCd     cityCd
 			       ,   A.CityNm     cityNm
@@ -398,7 +398,7 @@
 	  </trim>
 	 </sql> 
 
-		  <!-- 정민  상품 리스트 -->
+		  <!--   상품 리스트 -->
 	 <select id="productList" resultType="com.alt.domain.ProductVO">
 	   <![CDATA[
 	    SELECT * FROM  alt.product order by pcode desc 
@@ -406,13 +406,13 @@
 	  ]]>
 	  </select>
 	  
-	<!-- 정민 상품 등록 -->  
+	<!--  상품 등록 -->
 	<insert id="registerProduct" >
 		INSERT INTO alt.product( pcode , pname )
 		VALUES (alt.seq_product.nextval, #{pname} )
 	</insert>
 	 
-	<!-- 정민 -->
+	<!--  -->
 	<!--  상품 등록 페이징  -->
 	<select id="productListPaging" resultType="com.alt.domain.ProductVO">
 	   <![CDATA[
@@ -444,7 +444,7 @@
 
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 주문량 카운트 -->
 	<select id="orderChart" resultType="com.alt.domain.ChartVO">
 	  <![CDATA[	
@@ -460,7 +460,7 @@
 	</select>
 	
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 회원 한달 추가 카운트 -->
 	<select id="clientChart" resultType="com.alt.domain.ClientChartVO">
 	 <![CDATA[	
@@ -477,7 +477,7 @@
 	]]>
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 회원 탈퇴 차트 카운트 -->
 	<select id="clientChartD" resultType="com.alt.domain.ClientChartVO">
 	 <![CDATA[	
@@ -495,7 +495,7 @@
 	]]>
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 업체 한달 추가 카운트 -->
 	<select id="vendorChart" resultType="com.alt.domain.VendorChartVO">
 	 <![CDATA[	
@@ -512,7 +512,7 @@
 	]]>
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 회원 탈퇴 차트 카운트 -->
 	<select id="vendorChartD" resultType="com.alt.domain.VendorChartVO">
 	 <![CDATA[	
@@ -530,7 +530,7 @@
 	]]>
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 총매출 -->
 	<select id="totalPrice" resultType="com.alt.domain.TotalPriceVO">
 	 <![CDATA[	
@@ -548,13 +548,13 @@
 	]]>
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 총상품수 -->
 	<select id="totalsaleboard"  resultType="int">
 	 select Count(*) from alt.SALEBOARD
 	</select>
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 총상품수 -->
 	<select id="totalOrd"  resultType="int">
 	 select count(*) from alt.ordProduct
@@ -580,7 +580,7 @@
 			</foreach>
 	  </trim>
 	 </sql> 
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 상품 리스트 -->
 	<select id= "saleList" resultType="com.alt.domain.SaleBoardVO">
 		  <![CDATA[
@@ -599,7 +599,7 @@
 	  ]]>
 	</select>  
 		
-	<!-- 정민 --> 
+	<!--  -->
 	<!-- 상품 리스트 -->
 	<select id="saleListCount" resultType="int">
 		select Count(*) from alt.SALEBOARD
@@ -611,7 +611,7 @@
 
 	</select>
  
-	 <!--   정민  판매게시판 삭제 -->
+	 <!--     판매게시판 삭제 -->
    <delete id="saleListDelete" parameterType="String" >
 	 	delete from alt.SALEBOARD  where sno=#{sno}
 	 </delete> 

@@ -87,7 +87,7 @@ public class ClientServiceImpl implements ClientService{
 		   //////////////////////////////////////////////////////////////////////
 		   
 		   
-		   //서영
+		   //
 		//마이페이지 - 회원 정보 출력
 		@Override
 		public ClientVO listClient(String cid) {
@@ -100,7 +100,7 @@ public class ClientServiceImpl implements ClientService{
 		}
 		
 		
-		//서영
+		//
 		//마이페이지 -회원 정보 수정
 		@Override
 		public boolean modifyClient(ClientVO clientVO) {
@@ -113,7 +113,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.modifyClient(clientVO) == 1;
 		}
 		
-		//서영
+		//
 		//마이페이지 -회원 정보 수정(비밀번호)
 		@Override
 		public boolean modifyPasswordClient(ClientVO clientVO) {
@@ -126,7 +126,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.modifyPasswordClient(clientVO) == 1;
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 탈퇴
 		public boolean deleteClient(ClientVO clientVO) {
 			
@@ -138,7 +138,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.deleteClient(clientVO) == 1;
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 탈퇴 권한 삭제
 		public boolean deleteClientAuth(ClientAuthVO clientauthVO) {
 			
@@ -150,7 +150,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.deleteClientAuth(clientauthVO) == 1;
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 찜 목록
 		@Override
 		public List<ZimVO> listZim(String cid) {
@@ -160,7 +160,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.listZim(cid);
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 주문 목록
 		@Override
 		public List<OrdVO> listOrd(String cid) {
@@ -170,7 +170,7 @@ public class ClientServiceImpl implements ClientService{
 			return clientMapper.listOrd(cid);
 		}
 		
-		//서영
+		//
 		//마이페이지 - 회원 주문 목록 - 검색
 	 	public List<OrdVO> ordSearchClient(String cid, String type) {
 	 		log.info("Service ordSearchClient() : " + cid);
@@ -178,7 +178,7 @@ public class ClientServiceImpl implements ClientService{
 
 	 	}
 	 	
-	 	//성환
+	 	//
 	 	//마이페이지 - 주문 상세 내역
 	 	public List<HashMap<String, String>> listOrdProduct(String ocode) {
 	 		

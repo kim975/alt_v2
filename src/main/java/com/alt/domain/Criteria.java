@@ -30,7 +30,7 @@ public class Criteria {
     this.amount = amount;
   }
   
-  //지영
+  //
   //type필드의 TCW 값을 ["T", "C", "W"] 배열로 반환하는 메소드
   public String[] getTypeArr() {
 	return type ==null ? new String[] {} : type.split("");

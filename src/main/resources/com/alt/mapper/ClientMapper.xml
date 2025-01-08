@@ -5,21 +5,21 @@
  
 <mapper namespace="com.alt.mapper.ClientMapper">
 	
-	<!-- 정민 -->
+	<!--  -->
 	<resultMap id="memResult" type="java.util.HashMap">
 	        <result property="cid" column= "cid" />
 	        <result property="cnick" column= "cnick" />
 	        <result property="cgrade" column= "cgrade" />
 	</resultMap>
 
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 아이디 삽입 -->
 <!-- 	<insert id="register" parameterType="com.alt.domain.ClientVO">
 		insert into client 
 		values (#{cid} , #{cpassword} , #{cname} , #{cnick} , #{cphone} , #{caddress} , default , default , default, default, default) 
 	</insert>    --> 
 	
-		<!-- 정민 -->
+		<!--  -->
 	<!-- 아이디 삽입 -->
 	<insert id="register" parameterType="com.alt.domain.ClientVO">
 		insert into alt.client 
@@ -32,7 +32,7 @@
 		values (#{cid}, 'ROLE_CLIENT') 
 	</insert>  
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 아이디 맞는지 확인 -->
 	<select id="loginCheck" resultMap="memResult">
 		SELECT cid, cnick, cgrade FROM alt.client  where cid = #{cid} AND cpassword = #{cpassword}
@@ -42,7 +42,7 @@
 		SELECT * FROM alt.client  where cid = #{cid} AND cpassword = #{cpassword}
 	</select> -->
 	
-	<!-- 정민 -->
+	<!--  -->
 	<!-- 회원가입 시 ID 중복  확인 SELECT -->	
  	<select id="idCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
 		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
@@ -51,7 +51,7 @@
 		WHERE cid=#{cid}
      </select>
     
-    <!-- 정민 --> 
+    <!--  -->
 	<!-- 회원가입 닉 중복  확인 SELECT -->	
  	<select id="nickCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
 		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
@@ -60,7 +60,7 @@
 		WHERE cnick=#{cnick}
      </select>
      
-     <!-- 정민 -->
+     <!--  -->
      <!-- 회원가입 전화번호 중복  확인 SELECT -->	
  	<select id="phoneCheck" parameterType="com.alt.domain.ClientVO" resultType="String">
 		SELECT (CASE WHEN COUNT(*) = 0 THEN 'usable'
@@ -73,7 +73,7 @@
  <!-- //////////////////////////////////////////////////////////////////// -->
  
  
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 정보 출력 -->
 	<select id="listClient" resultType="com.alt.domain.ClientVO">
 	<![CDATA[
@@ -81,7 +81,7 @@
 	]]>
 	</select>
 	
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 정보 수정 -->
 	<update id="modifyClient">
 	<![CDATA[
@@ -91,7 +91,7 @@
 	]]>
 	</update>
 
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 정보 수정 (비밀번호) -->
 	<update id="modifyPasswordClient">
 	<![CDATA[
@@ -101,7 +101,7 @@
 	]]>
 	</update>
 	
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지/회원 탈퇴 -->
 	<update id="deleteClient">
 	<![CDATA[
@@ -119,7 +119,7 @@
 	</delete>
 	
   	
-  	<!-- 서영 -->
+  	<!--  -->
 	<!-- 마이페이지/찜 리스트 -->
 	<select id="listZim" resultType="com.alt.domain.ZimVO">
   	<![CDATA[
@@ -131,7 +131,7 @@
   	]]>
   	</select> 	
   	
-  	<!-- 서영 -->
+  	<!--  -->
 	<!-- 마이페이지-회원 주문 리스트 -->
 	<select id="listOrd" resultType="com.alt.domain.OrdVO">
   	<![CDATA[
@@ -141,7 +141,7 @@
   	]]>
   	</select>
 
-	<!-- 서영 -->
+	<!--  -->
 	<!-- 마이페이지-회원 주문 결제 검색 -->
 	<select id="ordSearchClient" resultType="com.alt.domain.OrdVO">
   	<![CDATA[
@@ -165,7 +165,7 @@
  	]]>
   	</select>
   	
-  	<!-- 성환 -->
+  	<!--  -->
     <!-- 마이페이지-주문 상세 목록 -->
     <!--  여기에 inner join 넣기 -->
     <select id="listOrdProduct" resultType="Map">

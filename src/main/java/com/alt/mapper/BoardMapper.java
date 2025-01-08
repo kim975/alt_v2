@@ -15,42 +15,42 @@ import com.alt.domain.ZimVO;
 
 public interface BoardMapper {
 	
-	//용민
+	//
 	public List<SaleBoardVO> getListPaging(Criteria cri);
 	
-	//용민
+	//
 	public List<SaleThumbImgVO> selectSaleBoardThumbImage(List<Integer> snoList);
 	
-	//용민
+	//
 	public SaleBoardVO getSaleDetail(int sno);
 	
-	//용민
+	//
 	public int insertBasket(BasketVO basketVO);
 	
-	//용민
+	//
 	public List<BasketVO> selectBasketList(String cid);
 	
 	public List<HashMap<String, String>> selectBasketListSaleBoard(String cid);
 	
-	//용민
+	//
 	public int deleteBasket(String bcode);
 	
-	//용민
+	//
 	public Integer selectBasketTotalPrice(String cid);
 	
-	//용민
+	//
 	public int insertZim(ZimVO zimVO);
 	
-	//용민
+	//
 	public int insertSaleProductRegister(SaleBoardVO saleBoardVO);
 	
-	//용민
+	//
 	public int selecTotalCount();
 	
-	//용민
+	//
 	public List<SaleImgVO> selectSaleBoardImamge(int sno);
 	
-	//용민
+	//
 	public void updateSaleProduct(SaleBoardVO saleBoardVO);
 	
 	public void updateRemoveProduct(int sno);
@@ -59,10 +59,10 @@ public interface BoardMapper {
 	
 	public int deleteZim(ZimVO zimVO);
 	
-	//용민
+	//
 	public int insertOrd(OrdVO ordVO);
 	
-	//용민
+	//
 	public void insertOrdProduct(OrdProductVO ordProductVO);
 	
 	public void deleteBasketAll(String cid);

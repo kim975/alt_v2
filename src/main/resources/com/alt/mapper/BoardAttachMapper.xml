@@ -10,13 +10,13 @@
 		values(#{suuid}, #{suploadPath}, #{sfileName}, #{sno})
 	</insert>
 	
-	<!-- 용민 -->
+	<!--  -->
 	<insert id="insertReplyImage">
 		insert into alt.replyImg
 		values(#{ruuid}, #{ruploadPath}, #{rfileName}, #{rno})
 	</insert>
 	
-	<!-- 용민 -->
+	<!--  -->
 	<select id="insertThumb">
 		insert into alt.saleThumbImg
 		values(#{stuuid}, #{stuploadPath}, #{stfileName}, #{sno})

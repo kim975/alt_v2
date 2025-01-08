@@ -48,7 +48,7 @@ public class BoardController {
 	@Setter(onMethod_ = {@Autowired})
 	private ReplyService replyService;
 	
-	//용민
+	//
 	//상품 목록 페이지
 	@GetMapping("/saleBoard")
 	public void saleBoardList(Criteria cri, Model model) {
@@ -77,7 +77,7 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
-	//용민
+	//
 	//상품 썸네일 이미지
 	@GetMapping(value = "/getThumbList",
 			produces = "application/json; charset=utf-8")
@@ -104,7 +104,7 @@ public class BoardController {
 		return new ResponseEntity<>(boardService.selectSaleBoardThumbImage(snoList), HttpStatus.OK);
 	}
 	
-	//용민
+	//
 	//상품 메인 이미지
 	@GetMapping(value = "/getImageList",
 			produces = "application/json; charset=utf-8")
@@ -114,7 +114,7 @@ public class BoardController {
 		return new ResponseEntity<>(boardService.selectSaleBoardImamge(sno), HttpStatus.OK);
 	}
 	
-	//용민
+	//
 	//상품 상세 페이지
 	@GetMapping("/saleDetail")
 	public void saleDetail(@RequestParam("sno") int sno, Model model) {
@@ -134,7 +134,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//장바구니 등록
 	@PostMapping(value = "/basket", 
 				 //웹브라우저로부터 받아서 메소드가 사용하는 값의 MIME유형을 지정.
@@ -160,7 +160,7 @@ public class BoardController {
 		//삼항 연산자 처리.
 	}
 	
-	//용민
+	//
 	//장바구니에서 물품 삭제
 	@DeleteMapping(value = "/basket/{bcode}")
 	@ResponseBody
@@ -175,7 +175,7 @@ public class BoardController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	//용민
+	//
 	//장바구니 목록 페이지 
 	@GetMapping(value = "/basketList")
 	@PreAuthorize("hasRole('ROLE_CLIENT')")
@@ -203,7 +203,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//장바구니 최종가격
 	@GetMapping(value = "/basketTotalPrice")
 	@ResponseBody
@@ -218,7 +218,7 @@ public class BoardController {
 		return totalPrice;
 	}
 	
-	//용민
+	//
 	//찜하기
 	@PostMapping(value = "/doZim", 
 			 consumes = "application/json; charset=utf-8", 
@@ -233,7 +233,7 @@ public class BoardController {
 		return insertCount;
 	}
 	
-	//용민
+	//
 	//판매 물품 페이지
 	@GetMapping("/saleRegister")
 	@PreAuthorize("hasRole('ROLE_VENDOR')")
@@ -242,7 +242,7 @@ public class BoardController {
 		model.addAttribute("product", boardService.selectPcode());
 	}
 	
-	//용민
+	//
 	//판매 물품 등록
 	@PostMapping("/saleRegister")
 	public String saleRegister(SaleBoardVO saleBoardVO, RedirectAttributes rttr, Principal principal) {
@@ -267,7 +267,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//판매 물품 수정 페이지
 	@GetMapping("/saleModify")
 	public void saleModify(@RequestParam("sno") int sno, Model model) {
@@ -277,7 +277,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//판매 물품 등록
 	@PostMapping("/saleModify")
 	public String saleModify(SaleBoardVO saleBoardVO, RedirectAttributes rttr) {
@@ -298,7 +298,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//상품 삭제
 	@GetMapping("/saleDelete")
 	public String saleDelete(int sno) {
@@ -310,7 +310,7 @@ public class BoardController {
 		return "redirect:/board/saleBoard";
 	}
 	
-	//용민
+	//
 	//결제 페이지
 	@GetMapping(value = "/salePay")
 	public void salePay(@RequestParam("cid") String cid, Model model) {
@@ -337,7 +337,7 @@ public class BoardController {
 		
 	}
 	
-	//용민
+	//
 	//결제 페이지
 	@PostMapping(value = "/salePay")
 	public void salePay(OrdVO ordVO , Model model) {
@@ -347,7 +347,7 @@ public class BoardController {
 		boardService.insertProductPay(ordVO);
 	}
 	
-	//용민
+	//
 	//결제 페이지
 	@PostMapping(value = "/pay")
 	public String pay(OrdVO ordVO , int totalPrice, Model model) {
@@ -361,7 +361,7 @@ public class BoardController {
 		return "/admin/pay";
 	}
 	
-	//용민
+	//
 	//찜되어있나 확인
 	@PostMapping(value = "/checkZim",
 			 	 consumes = "application/json; charset=utf-8", 
@@ -374,7 +374,7 @@ public class BoardController {
 		return boardService.selectZim(zimVO);
 	}
 	
-	//용민
+	//
 	//conferdoc
 	@GetMapping(value = "/conferDoc")
 	public void conferDoc(@RequestParam(value="ocode", required = false) String ocode,

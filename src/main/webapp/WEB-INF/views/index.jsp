@@ -325,7 +325,7 @@ section {
                             <div class="member">
                                 <div class="pic"><img src="/resources/assets/img/team/seo.jpg" class="img-fluid" alt=""></div>
                                 <div class="member-info">
-                                    <h4>정 서영</h4>
+                                    <h4>정 </h4>
                                     <span>JAVA 웹 개발자</span>
                                     <p>팀&nbsp;&nbsp;&nbsp;장</p>
                                     <p>로그인/회원가입/마이페이지/디자인</p>
@@ -343,7 +343,7 @@ section {
                             <div class="member">
                                 <div class="pic"><img src="/resources/assets/img/team/ji.jpg" class="img-fluid" alt=""></div>
                                 <div class="member-info">
-                                    <h4>고 지영</h4>
+                                    <h4>고 </h4>
                                     <span>JAVA 웹 개발자</span>
                                     <p>팀&nbsp;&nbsp;&nbsp;원</p>
                                     <p>공지사항/채팅/업체-마이페이지/디자인</p>
@@ -361,7 +361,7 @@ section {
                             <div class="member">
                                 <div class="pic"><img src="/resources/assets/img/team/jeng.jpg" class="img-fluid" alt=""></div>
                                 <div class="member-info">
-                                    <h4>임 정민</h4>
+                                    <h4>임 </h4>
                                     <span>JAVA 웹 개발자</span>
                                     <p>마이페이지/관리자페이지/디자인</p>
                                     <div class="social">
@@ -380,7 +380,7 @@ section {
                             <div class="member">
                                 <div class="pic"><img src="/resources/assets/img/team/yong.jpg" class="img-fluid" alt=""></div>
                                 <div class="member-info">
-                                    <h4>김 용민</h4>
+                                    <h4>김 </h4>
                                     <span>JAVA 웹 개발자</span>
                                     <p>판매게시판/찜/장바구니/결제시스템/디자인</p>
                                     <div class="social">
@@ -397,7 +397,7 @@ section {
                             <div class="member">
                                 <div class="pic"><img src="/resources/assets/img/team/sung.jpg" class="img-fluid" alt=""></div>
                                 <div class="member-info">
-                                    <h4>윤성환</h4>
+                                    <h4>윤</h4>
                                     <span>주문상세 페이지/디자인</span>
                                     <p>팀&nbsp;&nbsp;&nbsp;원</p>
                                     <div class="social">
@@ -533,7 +533,7 @@ section {
             });
         });
         
-      //지영
+      //
       //hero 배너
       var slideIndex = 0;
 
