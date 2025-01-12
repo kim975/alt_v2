@@ -12,22 +12,22 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class CustomLogoutSuccessHandler implements LogoutSuccessHandler{
-	
-	@Override
-	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
+public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
-		  if (authentication != null && authentication.getDetails() != null) {
-	            try {
-	                 request.getSession().invalidate();
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        } 
-	        response.setStatus(HttpServletResponse.SC_OK);
-	        log.info("로그아웃 성공 됨..");
-	        response.sendRedirect("/");
-	    }
-		
+    @Override
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+        throws IOException, ServletException {
+
+        if (authentication != null && authentication.getDetails() != null) {
+            try {
+                request.getSession().invalidate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
+        log.info("로그아웃 성공 됨..");
+        response.sendRedirect("/");
+    }
+
 }

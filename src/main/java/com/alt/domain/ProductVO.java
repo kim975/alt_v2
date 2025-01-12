@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductVO {
-	
-	private int pcode;
-	private String pname;
+
+    private int pcode;
+    private String pname;
 
 }

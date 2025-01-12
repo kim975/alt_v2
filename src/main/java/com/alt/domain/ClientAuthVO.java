@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClientAuthVO {
 
-	private String cid;
-	private String authority;
-	
+    private String cid;
+    private String authority;
+
 }

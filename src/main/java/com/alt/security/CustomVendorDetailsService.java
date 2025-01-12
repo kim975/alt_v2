@@ -15,19 +15,19 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class CustomVendorDetailsService implements UserDetailsService {
 
-	@Setter(onMethod_ = { @Autowired })
-	private VendorMapper vendorMapper;
+    @Setter(onMethod_ = {@Autowired})
+    private VendorMapper vendorMapper;
 
-	@Override
-	public UserDetails loadUserByUsername(String vid) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String vid) throws UsernameNotFoundException {
 
-		log.warn("읽어진 회원의 아이디 정보 : " + vid);
+        log.warn("읽어진 회원의 아이디 정보 : " + vid);
 
-		MemberVO memberVO = vendorMapper.read(vid);
+        MemberVO memberVO = vendorMapper.read(vid);
 
-		log.warn("클라이언트 메퍼에 의해서 반환된 clientVO : " + memberVO);
+        log.warn("클라이언트 메퍼에 의해서 반환된 clientVO : " + memberVO);
 
-		return  memberVO == null ? null : new CustomVendorUser(memberVO) ;
-	} 
+        return memberVO == null ? null : new CustomVendorUser(memberVO);
+    }
 
 }

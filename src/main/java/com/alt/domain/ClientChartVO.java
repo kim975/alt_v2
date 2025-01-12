@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientChartVO {
-	
-	private String cjoindate;
-	private int cid;
-	private int cdelete;
+
+    private String cjoindate;
+    private int cid;
+    private int cdelete;
 }

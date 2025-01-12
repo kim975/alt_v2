@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/juso/*")
 public class JusoController {
 
-	@RequestMapping(value = "/juso/Sample", method = {RequestMethod.GET, RequestMethod.POST})
-	public String Sample(Locale locale, Model model) {
-		return "/juso/Sample";
-	}
-	
-	@RequestMapping(value = "/juso/jusoPopup", method = {RequestMethod.GET, RequestMethod.POST})
-	public String jusoPopup(Locale locale, Model model) {
-		return "/juso/jusoPopup";
-	}
-	
-	
+    @RequestMapping(value = "/juso/Sample", method = {RequestMethod.GET, RequestMethod.POST})
+    public String Sample(Locale locale, Model model) {
+        return "/juso/Sample";
+    }
+
+    @RequestMapping(value = "/juso/jusoPopup", method = {RequestMethod.GET, RequestMethod.POST})
+    public String jusoPopup(Locale locale, Model model) {
+        return "/juso/jusoPopup";
+    }
+
+
 }

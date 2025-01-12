@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Sadf {
 
-	private int asdf;
+    private int asdf;
 }

@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 public class ReplyPageDTO {
 
-  private int replyCnt;
-  private List<ReplyVO> list;
-  
-  private List<ReplyImgVO> replyImg;
+    private int replyCnt;
+    private List<ReplyVO> list;
+
+    private List<ReplyImgVO> replyImg;
 }

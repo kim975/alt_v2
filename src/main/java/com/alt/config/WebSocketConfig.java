@@ -10,16 +10,16 @@ import com.alt.util.SocketHandler;
 
 @Configuration
 @EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer{
+public class WebSocketConfig implements WebSocketConfigurer {
 
-	@Autowired
-	SocketHandler socketHandler;
-	
-	@Override
-	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(socketHandler, "/chating/{roomno}");
-	}
-	
+    @Autowired
+    SocketHandler socketHandler;
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(socketHandler, "/chating/{roomno}");
+    }
+
 //    @Bean
 //    public ServletServerContainerFactoryBean createWebSocketContainer() {
 //        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();

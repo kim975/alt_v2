@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BasketVO {
-	
-	private String bcode;     
-	private String cid;      
-	private int sno;       
-	private Timestamp bdate;     
-	private int bamount;  
-	private int bprice;
-	
+
+    private String bcode;
+    private String cid;
+    private int sno;
+    private Timestamp bdate;
+    private int bamount;
+    private int bprice;
+
 }

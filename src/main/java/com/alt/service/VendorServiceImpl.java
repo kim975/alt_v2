@@ -25,31 +25,31 @@ public class VendorServiceImpl implements VendorService {
     })
     private VendorMapper vendorMapper;
 
-  //
-	//마이페이지 -회원 정보 수정(비밀번호)
-	@Override
-	public boolean modifyPasswordVendor(VendorVO vendorVO) {
-		
-		log.info("회원 정보 수정 실행......" + vendorVO);
-		
-		vendorMapper.modifyPasswordVendor(vendorVO);
-		
-		//만족하면 true
-		return vendorMapper.modifyPasswordVendor(vendorVO) ==1;
-	}
-  	
     //
-	//마이페이지 - 회원 정보 출력
-	@Override
-	public VendorVO listVendor(String vid) {
+    //마이페이지 -회원 정보 수정(비밀번호)
+    @Override
+    public boolean modifyPasswordVendor(VendorVO vendorVO) {
 
-		log.info("ServiceImpl vendor List..........");
+        log.info("회원 정보 수정 실행......" + vendorVO);
 
-		System.out.println("vid = " + vid);
-		
-		return vendorMapper.listVendor(vid);
-	}
-  		
+        vendorMapper.modifyPasswordVendor(vendorVO);
+
+        //만족하면 true
+        return vendorMapper.modifyPasswordVendor(vendorVO) == 1;
+    }
+
+    //
+    //마이페이지 - 회원 정보 출력
+    @Override
+    public VendorVO listVendor(String vid) {
+
+        log.info("ServiceImpl vendor List..........");
+
+        System.out.println("vid = " + vid);
+
+        return vendorMapper.listVendor(vid);
+    }
+
 
     //업체 계정 삽입
     public String VendorRegister(VendorVO vendorVO) {
@@ -92,7 +92,7 @@ public class VendorServiceImpl implements VendorService {
         String result = vendorMapper.vendorNoCheck(vregisterNo);
         return result;
     }
-    
+
     //업체 전화번호 중복 체크
     @Override
     public String phoneCheck(String vphone) {
@@ -100,10 +100,6 @@ public class VendorServiceImpl implements VendorService {
         String result = vendorMapper.phoneCheck(vphone);
         return result;
     }
-
-
-
-
 
 
     //
@@ -129,22 +125,22 @@ public class VendorServiceImpl implements VendorService {
         log.info("Service deleteVendor() : " + vendorVO);
         return vendorMapper.deleteVendor(vendorVO) == 1; //만족하면 true 'T'
     }
-    
-	//
-	//마이페이지 - 업체 탈퇴 권한 삭제
-	public boolean deleteVendorAuth(VendorAuthVO vendorauthVO) {
-		
-		log.info("remove......" + vendorauthVO);
-		
-		vendorMapper.deleteVendorAuth(vendorauthVO);
-		
-		//만족하면 true
-		return vendorMapper.deleteVendorAuth(vendorauthVO) == 1;
-	}
+
+    //
+    //마이페이지 - 업체 탈퇴 권한 삭제
+    public boolean deleteVendorAuth(VendorAuthVO vendorauthVO) {
+
+        log.info("remove......" + vendorauthVO);
+
+        vendorMapper.deleteVendorAuth(vendorauthVO);
+
+        //만족하면 true
+        return vendorMapper.deleteVendorAuth(vendorauthVO) == 1;
+    }
 
     //
     //마이페이지-업체 판매 리스트
-    public List < SaleBoardVO > saleListVendor(String vid) {
+    public List<SaleBoardVO> saleListVendor(String vid) {
         log.info("saleListVendor");
         return vendorMapper.saleListVendor(vid);
     }
@@ -152,7 +148,7 @@ public class VendorServiceImpl implements VendorService {
     //
     //마이페이지-업체 주문 리스트
     @Override
-    public List < HashMap < String, String >> ordListVendor(String vid) {
+    public List<HashMap<String, String>> ordListVendor(String vid) {
         log.info("Service ordListVendor() " + vid);
         return vendorMapper.ordListVendor(vid);
     }
@@ -166,21 +162,19 @@ public class VendorServiceImpl implements VendorService {
 
     //
     //마이페이지-업체 주문 결제 검색
-    public List <HashMap<String, String>> ordSearchVendor(String vid, String type) {
+    public List<HashMap<String, String>> ordSearchVendor(String vid, String type) {
         log.info("Service ordCheckVendor() : " + vid);
         return vendorMapper.ordSearchVendor(vid, type);
     }
-    
+
     //
- 	//마이페이지 - 주문 상세 내역
- 	public List<HashMap<String, String>> listOrdProduct(String ocode) {
- 		
- 		log.info("getList..........");
-		
- 		return vendorMapper.listOrdProduct(ocode);
- 	}
- 
-    
+    //마이페이지 - 주문 상세 내역
+    public List<HashMap<String, String>> listOrdProduct(String ocode) {
+
+        log.info("getList..........");
+
+        return vendorMapper.listOrdProduct(ocode);
+    }
 
 
 }

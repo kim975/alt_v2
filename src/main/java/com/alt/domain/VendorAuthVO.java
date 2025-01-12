@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VendorAuthVO {
 
-	private String vid;
-	private String authority;
-	
+    private String vid;
+    private String authority;
+
 }

@@ -22,45 +22,43 @@ import lombok.NoArgsConstructor;
 //@AllArgsConstructor
 public class ChatRoomVO {
 
-	private String roomno;
-	private String cid;
-	private String vid;
-	private Timestamp roomdate;
-	private Set<WebSocketSession> sessions = new HashSet<>();
+    private String roomno;
+    private String cid;
+    private String vid;
+    private Timestamp roomdate;
+    private Set<WebSocketSession> sessions = new HashSet<>();
     //private long userCount; // 채팅방 인원수, 채팅방 내에서 메시지가 전달될때 인원수 갱신시 사용
     private List<ChatMsgVO> messages = new ArrayList<>();
-	
-	
-	public ChatRoomVO(long roomno, String cid, String vid, Timestamp roomdate) {
-		this.roomno = UUID.randomUUID().toString();
-		this.cid = cid;
-		this.vid = vid;
-		this.roomdate = roomdate;
-	}
-	
-	//
-	//웹소켓 입퇴장
+
+
+    public ChatRoomVO(long roomno, String cid, String vid, Timestamp roomdate) {
+        this.roomno = UUID.randomUUID().toString();
+        this.cid = cid;
+        this.vid = vid;
+        this.roomdate = roomdate;
+    }
+
+    //
+    //웹소켓 입퇴장
     public void handleMessage(WebSocketSession session, ChatMsgVO chatMessage,
-                              ObjectMapper objectMapper) throws IOException {
-        if(chatMessage.getType() ==  MessageType.ENTER){
+        ObjectMapper objectMapper) throws IOException {
+        if (chatMessage.getType() == MessageType.ENTER) {
             sessions.add(session);
             chatMessage.setMsg(chatMessage.getId() + "님이 입장하셨습니다.");
-        }
-        else if(chatMessage.getType() == MessageType.LEAVE){
+        } else if (chatMessage.getType() == MessageType.LEAVE) {
             sessions.remove(session);
             chatMessage.setMsg(chatMessage.getId() + "님이 퇴장하셨습니다.");
-        }
-        else{
+        } else {
             chatMessage.setMsg(chatMessage.getId() + " : " + chatMessage.getMsg());
         }
-        send(chatMessage,objectMapper);
+        send(chatMessage, objectMapper);
     }
 
     //웹소켓 session
     private void send(ChatMsgVO chatMessage, ObjectMapper objectMapper) throws IOException {
         TextMessage textMessage = new TextMessage(objectMapper.
-                                    writeValueAsString(chatMessage.getMsg()));
-        for(WebSocketSession sess : sessions){
+            writeValueAsString(chatMessage.getMsg()));
+        for (WebSocketSession sess : sessions) {
             sess.sendMessage(textMessage);
         }
     }
