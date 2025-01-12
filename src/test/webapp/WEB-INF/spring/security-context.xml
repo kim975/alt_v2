@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<!-- 접근 제한 빈 생성 -->
+	<bean id="customAccessDeniedHandler" class="com.alt.security.CustomAccessDeniedHandler"/>
+	
+	<!-- 로그아웃 / 로그인 빈 생성 -->
+	<bean id="CustomLogoutSuccessHandler" class="com.alt.security.CustomLogoutSuccessHandler"/>
+	<bean id="customLoginSuccessHandler" class="com.alt.security.CustomLoginSuccessHandler"/>
+	
+	<!-- VO(ClientVO, ClientVOAuthVO)를 통한 로그인 처리 -->
+	<bean id="customVendorDetailsService" class="com.alt.security.CustomVendorDetailsService"/>
+	<bean id="CustomClientDetailService" class="com.alt.security.CustomClientDetailService"/>
+	
+	<!-- 로그인 처리 통합본 -->
+	<bean id="customAllDetailsService" class="com.alt.security.CustomAllDetailService"/>
+	
+	<!-- 32장 -->
+	<!-- customNoOpPasswordEncoder 인터페이스의 구현 클래스를 빈으로 생성-->
+	<bean id="customNoOpPasswordEncoder" class="com.alt.security.CustomNoOpPasswordEncoder"/>
+	
+	<!-- 스프링 시큐리티의 BCryptPasswordEncoder를 이용한 사용자 암호 암호화   -->
+	<!-- <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> -->
+	
+	<security:global-method-security pre-post-annotations="enabled" />
+	
+	<!-- 주소 security -->
+	<security:http
+	pattern="/juso/**"
+	auto-config="true" 
+	use-expressions="true" >
+		<security:csrf disabled="true"/>
+	</security:http>
+	
+	<!-- 회원 security -->
+	<security:http 
+	pattern="/client/log*"
+	auto-config="true" 
+	use-expressions="true" 
+	authentication-manager-ref="clientAuthManager">
+		
+		<security:csrf disabled="true"/>
+
+		<security:form-login 
+				login-page="/client/loginForm" 
+				authentication-success-handler-ref="customLoginSuccessHandler"
+				login-processing-url="/client/login"/>
+
+		<security:access-denied-handler ref="customAccessDeniedHandler"/>
+		<security:access-denied-handler ref="customLoginSuccessHandler"/>
+		
+	</security:http>
+	
+	<!-- 업체 security -->
+	<security:http 
+	pattern="/vendor/log*"
+	auto-config="true" 
+	use-expressions="true" 
+	authentication-manager-ref="vendorAuthManager">
+		
+		<security:csrf disabled="true"/>
+		
+		<!-- <security:form-login/> -->
+		<security:form-login login-page="/vendor/loginForm" 
+							 authentication-success-handler-ref="customLoginSuccessHandler"
+							 login-processing-url="/vendor/login"/>
+
+		<!-- 빈을 통한 에러페이지 -->
+		<security:access-denied-handler ref="customAccessDeniedHandler"/>
+		<security:access-denied-handler ref="customLoginSuccessHandler"/>
+		
+	</security:http>
+	
+	<!-- 통합 로그인 -->
+	<security:http 
+	pattern="/all/log*"
+	auto-config="true" 
+	use-expressions="true" 
+	authentication-manager-ref="AllAuthManager">
+		
+		<security:csrf disabled="true"/>
+		
+		<!-- <security:form-login/> -->
+		<security:form-login login-page="/all/loginForm" 
+							 authentication-success-handler-ref="customLoginSuccessHandler"
+							 login-processing-url="/all/login"/>
+
+		<!-- 빈을 통한 에러페이지 -->
+		<security:access-denied-handler ref="customAccessDeniedHandler"/>
+		<security:access-denied-handler ref="customLoginSuccessHandler"/>
+		
+	</security:http>
+	
+	<security:http 
+	auto-config="true" 
+	use-expressions="true">
+		
+		<!-- <security:csrf disabled="true"/> -->
+		
+		<!-- <security:intercept-url pattern="/notice/**" access="hasAnyRole('ROLE_ADMIN')"/> -->
+		<security:intercept-url pattern="/client/**" access="hasAnyRole('ROLE_CLIENT','ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/vendor/**" access="hasAnyRole('ROLE_VENDOR','ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/all/**" access="hasAnyRole('ROLE_CLIENT','ROLE_VENDOR')"/>
+		<security:intercept-url pattern="https://www.juso.go.kr/**" access="permitAll"/>
+		<!-- <security:intercept-url pattern="/chat/**" access="hasAnyRole('ROLE_VENDOR,ROLE_CLIENT')"/> -->
+		<security:access-denied-handler ref="customAccessDeniedHandler"/>
+		<security:access-denied-handler ref="customLoginSuccessHandler"/>
+		
+		<security:logout logout-url="/Logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"
+		success-handler-ref="CustomLogoutSuccessHandler"/>
+		
+	</security:http>
+	
+	<security:authentication-manager id="AllAuthManager"> 
+	
+		<security:authentication-provider user-service-ref="customAllDetailsService">	
+			
+			<!-- customNoOpPasswordEncoder 인터페이스의 구현 클래스를 빈으로 생성-->
+			<security:password-encoder ref="customNoOpPasswordEncoder"/>
+			
+			<!-- 스프링 시큐리티의 BCryptPasswordEncoder를 이용한 사용자 암호 암호화   -->
+			<!-- <security:password-encoder ref="bCryptPasswordEncoder"/> -->
+			
+		</security:authentication-provider> 
+		
+	</security:authentication-manager>
+	
+	<!-- 32장  JdbcUserDetailsManager 클래스 이용 -->
+	<security:authentication-manager id="vendorAuthManager"> 
+	
+		<security:authentication-provider user-service-ref="customVendorDetailsService">	
+			
+			<!-- customNoOpPasswordEncoder 인터페이스의 구현 클래스를 빈으로 생성-->
+			<security:password-encoder ref="customNoOpPasswordEncoder"/>
+			
+			<!-- 스프링 시큐리티의 BCryptPasswordEncoder를 이용한 사용자 암호 암호화   -->
+			<!-- <security:password-encoder ref="bCryptPasswordEncoder"/> -->
+			
+		</security:authentication-provider> 
+		
+	</security:authentication-manager>
+	
+	<security:authentication-manager id="clientAuthManager"> 
+	
+		<security:authentication-provider user-service-ref="CustomClientDetailService">	
+			
+			<!-- customNoOpPasswordEncoder 인터페이스의 구현 클래스를 빈으로 생성-->
+			<security:password-encoder ref="customNoOpPasswordEncoder"/>
+			
+			<!-- 스프링 시큐리티의 BCryptPasswordEncoder를 이용한 사용자 암호 암호화   -->
+			<!-- <security:password-encoder ref="bCryptPasswordEncoder"/> -->
+			
+		</security:authentication-provider> 
+		
+	</security:authentication-manager>
+	
+</beans>
