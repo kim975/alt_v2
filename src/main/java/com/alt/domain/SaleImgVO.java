@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaleImgVO {
-	
-	private String suuid;
-	private String suploadPath;
-	private String sfileName;
-	private int sno;
-	
+
+    private String suuid;
+    private String suploadPath;
+    private String sfileName;
+    private int sno;
+
 }

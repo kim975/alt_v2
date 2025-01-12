@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaleThumbImgVO {
-	
-	private String stuuid; 
-	private String stuploadPath;
-	private String stfileName;
-	private int sno;
-	
+
+    private String stuuid;
+    private String stuploadPath;
+    private String stfileName;
+    private int sno;
+
 }

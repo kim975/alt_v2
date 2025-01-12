@@ -38,10 +38,10 @@ public class AdminController {
 
     @Autowired
     private ClientService clientService;
-    
+
     @Autowired
     private VendorService vendorService;
-    
+
     // 
     //관리자 페이지
     @GetMapping(value = "/admin")
@@ -60,29 +60,29 @@ public class AdminController {
         int reportSum = adminService.reportSum();
         model.addAttribute("reportSum", reportSum);
 
-        List < RtoVO > Rto = adminService.vendorRto();
+        List<RtoVO> Rto = adminService.vendorRto();
         model.addAttribute("vendorRto", Rto);
 
-        List < ChartVO > orderChart = adminService.orderChart();
+        List<ChartVO> orderChart = adminService.orderChart();
         model.addAttribute("orderChart", orderChart);
 
-        List < ClientChartVO > clientChart = adminService.clientChart();
+        List<ClientChartVO> clientChart = adminService.clientChart();
         model.addAttribute("clientChart", clientChart);
 
-        List < ClientChartVO > clientChartD = adminService.clientChartD();
+        List<ClientChartVO> clientChartD = adminService.clientChartD();
         model.addAttribute("clientChartD", clientChartD);
 
-        List < VendorChartVO > vendorChart = adminService.vendorChart();
+        List<VendorChartVO> vendorChart = adminService.vendorChart();
         model.addAttribute("vendorChart", vendorChart);
 
-        List < VendorChartVO > vendorChartD = adminService.vendorChartD();
+        List<VendorChartVO> vendorChartD = adminService.vendorChartD();
         model.addAttribute("vendorChartD", vendorChartD);
 
-        List < TotalPriceVO > totalPrice = adminService.totalPrice();
+        List<TotalPriceVO> totalPrice = adminService.totalPrice();
         model.addAttribute("totalPrice", totalPrice);
 
         return "admin/admin";
-        
+
     }
 
     //
@@ -90,9 +90,9 @@ public class AdminController {
     @GetMapping(value = "/clientInfo")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String clientInfo(Criteria cri, Model model) {
-    	
+
         log.info("getClientList : " + cri);
-        
+
         int total = adminService.getTotaleCountC(cri);
         model.addAttribute("getClientList", adminService.clientListPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
@@ -105,35 +105,33 @@ public class AdminController {
     @GetMapping("/clientDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String clientDelete(@RequestParam("cid") String cid, Criteria cri, RedirectAttributes rttr) {
-    	
+
         adminService.clientDelete(cid);
 
         return "redirect:/admin/clientInfo";
 
     }
-    
+
     //
     //client업데이트
     @GetMapping("/clientUpdate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String clientUpdate(String cid, RedirectAttributes rttr) {
-    	
-    	ClientAuthVO clientauthVO = new ClientAuthVO();
-    	
-    	clientauthVO.setCid(cid);
-    	
+
+        ClientAuthVO clientauthVO = new ClientAuthVO();
+
+        clientauthVO.setCid(cid);
+
         log.info("clientUpdate : " + cid);
 
         adminService.clientUpdate(cid);
         clientService.Roleregister(clientauthVO);
         rttr.addFlashAttribute("result", "success");
-           
- 
-        
+
         return "redirect:/admin/clientInfo";
-        
+
     }
-    
+
     //
     //client Y 리스트 
     @GetMapping(value = "/clientListYPaging")
@@ -141,22 +139,22 @@ public class AdminController {
     public String clientListYPaging(Criteria cri, Model model) {
 
         log.info("clientListYPaging : " + cri);
-        
+
         int total = adminService.getTotaleCountYC(cri);
-        
+
         model.addAttribute("getClientListY", adminService.clientListYPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/admin_info_client_Y";
-        
+
     }
-    
+
     //
     //client Y  삭제
     @GetMapping("/clientDeleteY")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String clientDeleteY(@RequestParam("cid") String cid, RedirectAttributes rttr) {
-    	
+
         log.info("clientDeleteY" + cid);
 
         adminService.clientDeleteY(cid);
@@ -172,14 +170,14 @@ public class AdminController {
     public String clientListRPaging(Criteria cri, Model model) {
 
         log.info("clientListRPaging : " + cri);
-        
+
         int total = adminService.getTotaleCountRC(cri);
-        
+
         model.addAttribute("getClientListR", adminService.clientListRPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/admin_info_client_R";
-        
+
     }
 
     //
@@ -187,7 +185,7 @@ public class AdminController {
     @GetMapping("/clientDeleteR")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String clientDeleteR(@RequestParam("cid") String cid, RedirectAttributes rttr) {
-    	
+
         log.info("clientDeleteR : " + cid);
 
         adminService.clientDeleteR(cid);
@@ -203,12 +201,11 @@ public class AdminController {
     public String vendorListPaging(Criteria cri, Model model) {
 
         log.info("vendorInfo : " + cri);
-        
+
         int total = adminService.getTotaleCountV(cri);
-        
+
         model.addAttribute("getVendorList", adminService.vendorListPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
-
 
         return "admin/admin_info_vendor";
     }
@@ -218,7 +215,7 @@ public class AdminController {
     @GetMapping("/vendorDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String vendorDelete(@RequestParam("vid") String vid, RedirectAttributes rttr) {
-    	
+
         log.info("vendorDelete" + vid);
 
         adminService.vendorDelete(vid);
@@ -226,27 +223,25 @@ public class AdminController {
         return "redirect:/admin/vendorListPaging";
 
     }
-    
+
     //
     //vendor업데이트
     @GetMapping("/vendorUpdate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String vendorUpdate(String vid, RedirectAttributes rttr) {
-    	
-    	VendorAuthVO vendorauthVO = new VendorAuthVO();
-    	
-    	vendorauthVO.setVid(vid);
-    	
+
+        VendorAuthVO vendorauthVO = new VendorAuthVO();
+
+        vendorauthVO.setVid(vid);
+
         log.info("vendorUpdate : " + vid);
 
         adminService.vendorUpdate(vid);
         vendorService.RoleRegister(vendorauthVO);
         rttr.addFlashAttribute("result", "success");
-            
-  
-        
+
         return "redirect:/admin/vendorListPaging";
-        
+
     }
 
     //
@@ -256,14 +251,14 @@ public class AdminController {
     public String vendorListYPaging(Criteria cri, Model model) {
 
         log.info("vendorListYPaging : " + cri);
-        
+
         int total = adminService.getTotaleCountYV(cri);
-        
+
         model.addAttribute("vendorListYPaging", adminService.vendorListYPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/admin_info_vendor_Y";
-        
+
     }
 
     //
@@ -271,7 +266,7 @@ public class AdminController {
     @GetMapping("/vendortDeleteY")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String vendortDeleteY(@RequestParam("vid") String vid, RedirectAttributes rttr) {
-    	
+
         log.info("vendortDeleteY" + vid);
 
         adminService.vendortDeleteY(vid);
@@ -279,30 +274,30 @@ public class AdminController {
         return "redirect:/admin/vendorListYPaging";
 
     }
-    
+
     //
     //vendor R 리스트 
     @GetMapping(value = "/vendorListRPaging")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String vendorListRPaging(Model model, Criteria cri) {
-    	
+
         log.info("vendorListRPaging" + cri);
-        
+
         int total = adminService.getTotaleCountRV(cri);
-        
+
         model.addAttribute("vendorListRPaging", adminService.vendorListRPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/admin_info_vendor_R";
-        
+
     }
-    
+
     //
     //vendor R  삭제
     @GetMapping("/vendortDeleteR")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String vendortDeleteR(@RequestParam("vid") String vid, RedirectAttributes rttr) {
-    	
+
         log.info("vendortDeleteR : " + vid);
 
         adminService.vendortDeleteR(vid);
@@ -310,7 +305,7 @@ public class AdminController {
         return "redirect:/admin/vendorListRPaging";
 
     }
-    
+
     //
     //product 리스트 
     @GetMapping(value = "/productList")
@@ -318,26 +313,26 @@ public class AdminController {
     public String productList(Model model, Criteria cri) {
 
         log.info("productList" + cri);
-        
+
         int total = adminService.getProductCount(cri);
-        
+
         model.addAttribute("productList", adminService.productListPaging(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/product";
-        
+
     }
-    
+
     //
     //product 등록 호출
     @GetMapping(value = "/product_register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String product_register(Model model) {
-    	
+
         log.info("productList");
 
         return "admin/product_register";
-        
+
     }
 
     //
@@ -345,40 +340,40 @@ public class AdminController {
     @PostMapping("/registerProduct")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String registerProduct(ProductVO vo, RedirectAttributes rttr) {
-    	
+
         log.info("registerProduct" + vo);
-        
+
         adminService.registerProduct(vo);
-        
+
         rttr.addFlashAttribute("result", vo.getPcode());
-        
+
         return "redirect:/admin/productList";
 
     }
-    
+
     //
     //판매 리스트 
     @GetMapping(value = "/saleList")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String saleList(Model model,Criteria cri ) {
-    	
-        log.info("saleList controller: " );
-        
+    public String saleList(Model model, Criteria cri) {
+
+        log.info("saleList controller: ");
+
         int total = adminService.saleListCount(cri);
-        
+
         model.addAttribute("saleList", adminService.saleList(cri));
         model.addAttribute("pageMaker", new PageDTO(cri, total));
 
         return "admin/saleList";
-        
+
     }
-    
+
     //
     //vendor R  삭제
     @GetMapping("/saleListDelete")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String saleListDelete(@RequestParam("sno") String sno, RedirectAttributes rttr) {
-    	
+
         log.info("saleListDelete : " + sno);
 
         adminService.saleListDelete(sno);

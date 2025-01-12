@@ -11,14 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrdVO {
 
-	private String ocode;
-//	private int sno;
+    private String ocode;
+    //	private int sno;
 //	private int oamount;
 //	private int oprice;
-	private String cid;
-	private String oaddress;
-	private String ophone;
-	private Timestamp odate;
-	private String opay;
-	
+    private String cid;
+    private String oaddress;
+    private String ophone;
+    private Timestamp odate;
+    private String opay;
+
 }

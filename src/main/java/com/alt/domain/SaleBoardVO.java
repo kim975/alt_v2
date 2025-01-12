@@ -12,19 +12,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SaleBoardVO {
 
-	private int sno;
-	private String vid;
-	private int pcode;
-	private String stitle;
-	private String sinfo;
-	private Timestamp swriteDate;
-	private Timestamp supdateDate;
-	private int sprice;
-	private String sdelete;
-	private int scount;
-	private int samount;
-	
-	private List<SaleImgVO> attachList;
-	private SaleThumbImgVO thumbImg;
-	
+    private int sno;
+    private String vid;
+    private int pcode;
+    private String stitle;
+    private String sinfo;
+    private Timestamp swriteDate;
+    private Timestamp supdateDate;
+    private int sprice;
+    private String sdelete;
+    private int scount;
+    private int samount;
+
+    private List<SaleImgVO> attachList;
+    private SaleThumbImgVO thumbImg;
+
 }

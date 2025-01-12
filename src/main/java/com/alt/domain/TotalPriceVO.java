@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TotalPriceVO {
-	
-	private String odate;
-	private int totalPrice;
-	 
+
+    private String odate;
+    private int totalPrice;
+
 
 }

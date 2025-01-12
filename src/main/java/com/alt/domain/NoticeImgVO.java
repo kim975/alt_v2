@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NoticeImgVO {
 
-	private String nuuid;
-	private String nuploadPath;
-	private String nfileName;
-	private String nfileType;		//default I
-	private Long nno;
+    private String nuuid;
+    private String nuploadPath;
+    private String nfileName;
+    private String nfileType;        //default I
+    private Long nno;
 }

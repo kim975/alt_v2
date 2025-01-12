@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientVO  {
+public class ClientVO {
 
-	private String cid;
-	private String cpassword;
-	private String cname;
-	private String cnick;
-	private String cphone;
-	private String caddress;
-	private Timestamp cjoinDate;
-	private int creport;
-	private String cdelete;
-	private String cgrade;
-	private String enable;
-	
-	private List<ClientAuthVO> ClientAuthList;
-	
+    private String cid;
+    private String cpassword;
+    private String cname;
+    private String cnick;
+    private String cphone;
+    private String caddress;
+    private Timestamp cjoinDate;
+    private int creport;
+    private String cdelete;
+    private String cgrade;
+    private String enable;
+
+    private List<ClientAuthVO> ClientAuthList;
+
 }

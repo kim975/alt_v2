@@ -11,18 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VendorVO {
 
-	private String vid;
-	private String vpassword;
-	private String vname;
-	private String vregisterNo;
-	private String vphone;
-	private String vaddress;
-	private Timestamp vjoinDate;
-	private String vinfo;
-	private int vreport;
-	private String vdelete;
-	private String vgrade;
-	private int enable;
+    private String vid;
+    private String vpassword;
+    private String vname;
+    private String vregisterNo;
+    private String vphone;
+    private String vaddress;
+    private Timestamp vjoinDate;
+    private String vinfo;
+    private int vreport;
+    private String vdelete;
+    private String vgrade;
+    private int enable;
 
-	
+
 }

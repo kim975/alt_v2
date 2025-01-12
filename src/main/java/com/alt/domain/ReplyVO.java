@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReplyVO {
 
-	private int rno;
-	private String rwriter;
-	private String rcontent;
-	private Timestamp rwriteDate;
-	private Timestamp rupdateDate;
-	private int rstar;
-	private String rdelete;
-	private int sno;
-	
-	private List<ReplyImgVO> attachList;
+    private int rno;
+    private String rwriter;
+    private String rcontent;
+    private Timestamp rwriteDate;
+    private Timestamp rupdateDate;
+    private int rstar;
+    private String rdelete;
+    private int sno;
+
+    private List<ReplyImgVO> attachList;
 }
