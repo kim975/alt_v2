@@ -30,6 +30,9 @@ public class ClientServiceImpl implements ClientService {
         log.info("회원 추가 Service " + clientVO);
         clientMapper.register(clientVO);
 
+        ClientAuthVO clientAuthVO = new ClientAuthVO();
+        clientAuthVO.setCid(clientVO.getCid());
+        clientMapper.roleRegister(clientAuthVO);
         return "register";
 
     }
@@ -37,7 +40,7 @@ public class ClientServiceImpl implements ClientService {
     //권한 추가
     public String Roleregister(ClientAuthVO clientAuthVO) {
         log.info("회원 추가 Service " + clientAuthVO);
-        clientMapper.Roleregister(clientAuthVO);
+        clientMapper.roleRegister(clientAuthVO);
 
         return "Roleregister";
 

@@ -111,7 +111,6 @@ public class LoginController {
         log.info("회원가입 권한 성공 : " + clientAuthVO);
 
         clientService.register(clientVO);
-        clientService.Roleregister(clientAuthVO);
 
         return "/client/loginForm";
 

@@ -21,7 +21,7 @@ public interface ClientMapper {
 
     //
     //client 권한 삽입
-    public void Roleregister(ClientAuthVO clientAuthVO);
+    public void roleRegister(ClientAuthVO clientAuthVO);
 
     //
     //client 체크
