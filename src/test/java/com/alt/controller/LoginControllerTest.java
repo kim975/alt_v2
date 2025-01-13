@@ -10,6 +10,7 @@ import com.alt.service.ClientServiceImpl;
 import javax.servlet.ServletException;
 import lombok.Setter;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,7 @@ public class LoginControllerTest {
     }
 
     @Test
+    @DisplayName("신규 사용자가 회원가입을 하면 회원가입이 완료된다")
     public void whenJoinNewClientThenSuccess() throws Exception {
 
         //given
@@ -81,7 +83,6 @@ public class LoginControllerTest {
         request.setParameter("cname", newClient.getCname());
         request.setParameter("cphone", newClient.getCphone());
         request.setParameter("caddress", newClient.getCaddress());
-        request.setParameter("addrDetail", "");
 
         //when
         dispatcherServlet.service(request, response);

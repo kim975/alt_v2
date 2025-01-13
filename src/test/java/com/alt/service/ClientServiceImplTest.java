@@ -52,7 +52,6 @@ public class ClientServiceImplTest {
 
         //when
         String registeredResult = clientService.register(newClient);
-        String roleRegisteredResult = clientService.Roleregister(newClientAuth);
 
         //then
         ClientVO joinedClient = clientService.listClient("testId");
