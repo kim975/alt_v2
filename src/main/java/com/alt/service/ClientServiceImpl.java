@@ -3,6 +3,7 @@ package com.alt.service;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.alt.mapper.ClientMapper;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.springframework.util.StringUtils;
 
 @Log4j
 @Service
@@ -27,6 +29,41 @@ public class ClientServiceImpl implements ClientService {
 
     //회원 추가
     public String register(ClientVO clientVO) {
+        if (StringUtils.isEmpty(clientVO.getCid())) {
+            throw new IllegalArgumentException();
+        }
+
+        if (clientVO.getCid().length() < 5) {
+            throw new IllegalArgumentException();
+        }
+
+        if (clientVO.getCid().length() > 10) {
+            throw new IllegalArgumentException();
+        }
+
+        Pattern pattern = Pattern.compile("^(01[016789])-(\\d{3,4})-(\\d{4})$");
+
+        if (!pattern.matcher(clientVO.getCphone()).matches()) {
+            throw new IllegalArgumentException();
+        }
+        int phoneNumberLength = clientVO.getCphone().replace("-", "").length();
+
+        if (phoneNumberLength < 10 || phoneNumberLength > 11) {
+            throw new IllegalArgumentException();
+        }
+
+        if (StringUtils.isEmpty(clientVO.getCnick())) {
+            throw new IllegalArgumentException();
+        }
+
+        if (clientVO.getCnick().length() < 2) {
+            throw new IllegalArgumentException();
+        }
+
+        if (clientVO.getCnick().length() > 15) {
+            throw new IllegalArgumentException();
+        }
+
         log.info("회원 추가 Service " + clientVO);
         clientMapper.register(clientVO);
 
