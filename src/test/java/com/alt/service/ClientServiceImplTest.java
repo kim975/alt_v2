@@ -7,11 +7,16 @@ import com.alt.domain.ClientAuthVO;
 import com.alt.domain.ClientVO;
 import com.alt.domain.MemberVO;
 import com.alt.mapper.ClientMapper;
+import java.util.stream.Stream;
 import lombok.Setter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -81,133 +86,72 @@ public class ClientServiceImplTest {
         assertEquals("ROLE_CLIENT", testId.getClientAuthList().get(0).getAuthority());
     }
 
-    @Test
-    @DisplayName("회원 가입시 ID가 없으면 에러가 발생한다.")
-    public void whenInputEmptyIdThenException() {
+    @ParameterizedTest(name = "[{index}] {0}")
+    @DisplayName("회원 가입 시 ID format이 다르면 에러가 발생한다.")
+    @MethodSource("provideInvalidIdForJoin")
+    public void whenInputInvalidFormatIdThenException(String message, String id) {
         //given
-        ClientVO emptyIdClient = newClient;
-        emptyIdClient.setCid("");
+        ClientVO invalidIdClient = newClient;
+        invalidIdClient.setCid(id);
 
         //when
         //then
         assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(emptyIdClient)
+            clientService.register(invalidIdClient)
         );
     }
-
-    @Test
-    @DisplayName("회원 가입시 ID가 짧으면 에러가 발생한다.")
-    public void whenInputShortIdThenException() {
+    @ParameterizedTest(name = "[{index}] {0}")
+    @DisplayName("회원 가입 시 핸드폰 번호 format이 다르면 에러가 발생한다.")
+    @MethodSource("provideInvalidPhoneNumberForJoin")
+    public void whenInputInvalidFormatPhoneNumberThenException(String message, String phoneNumber) {
         //given
-        ClientVO shortIdClient = newClient;
-        shortIdClient.setCid("1234");
+        ClientVO invalidPhoneClient = newClient;
+        invalidPhoneClient.setCphone(phoneNumber);
 
         //when
         //then
         assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(shortIdClient)
+            clientService.register(invalidPhoneClient)
         );
     }
 
-    @Test
-    @DisplayName("회원 가입시 ID가 길면 에러가 발생한다.")
-    public void whenInputLongIdThenException() {
+    @ParameterizedTest(name = "[{index}] {0}")
+    @DisplayName("회원 가입 시 닉네암 format이 다르면 에러가 발생한다.")
+    @MethodSource("provideInvalidNicknameForJoin")
+    public void whenInputInvalidFormatNicknameThenException(String message, String nickname) {
+
         //given
-        ClientVO longIdClient = newClient;
-        longIdClient.setCid("1234567890123456789012345678901");
+        ClientVO invalidNicknameClient = newClient;
+        invalidNicknameClient.setCnick(nickname);
 
         //when
         //then
         assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(longIdClient)
+            clientService.register(invalidNicknameClient)
+        );
+
+    }
+
+    public static Stream<Arguments> provideInvalidIdForJoin() {
+        return Stream.of(
+            Arguments.of("빈 값의 ID", ""),
+            Arguments.of("4자리 이하의 ID", "1234"),
+            Arguments.of("31자리 이상의 ID", "1234567890123456789012345678901")
+        );
+    }
+    public static Stream<Arguments> provideInvalidPhoneNumberForJoin() {
+        return Stream.of(
+            Arguments.of("빈 값의 핸드폰 번호", ""),
+            Arguments.of("'-'제외 하고 10~11자리가 아닌 핸드폰 번호", "123456789"),
+            Arguments.of("'-'가 없는 핸드폰 번호", "01012341234")
         );
     }
 
-    @Test
-    @DisplayName("회원 가입시 핸드폰 번호가 없으면 에러가 발생한다.")
-    public void whenInputEmptyPhoneThenException() {
-        //given
-        ClientVO emptyPhoneClient = newClient;
-        emptyPhoneClient.setCphone("");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(emptyPhoneClient)
+    private static Stream<Arguments> provideInvalidNicknameForJoin() {
+        return Stream.of(
+            Arguments.of("빈 값의 닉네임", ""),
+            Arguments.of("1자리 이하의 닉네임", "1"),
+            Arguments.of("16자리 이상의 닉네임", "1234567890123456")
         );
     }
-
-    @Test
-    @DisplayName("회원 가입시 핸드폰 번호에 '-'가 없으면 에러가 발생한다.")
-    public void whenInputNotInDashFormatPhoneThenException() {
-        //given
-        ClientVO notInDashFormatPhoneClient = newClient;
-        notInDashFormatPhoneClient.setCphone("01012341234");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(notInDashFormatPhoneClient)
-        );
-    }
-
-    @Test
-    @DisplayName("회원 가입시 핸드폰 번호가 10~11자리('-'제외)가 아니면 에러가 발생한다.")
-    public void whenInputWrongLengthPhoneThenException() {
-        //given
-        ClientVO wrongLengthPhoneClient = newClient;
-        wrongLengthPhoneClient.setCphone("123456789");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(wrongLengthPhoneClient)
-        );
-    }
-
-    @Test
-    @DisplayName("회원 가입시 닉네임 없으면 에러가 발생한다.")
-    public void whenInputEmptyNicknameThenException() {
-        //given
-        ClientVO emptyNicknameClient = newClient;
-        emptyNicknameClient.setCnick("");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(emptyNicknameClient)
-        );
-    }
-
-    @Test
-    @DisplayName("회원 가입시 닉네임이 짧으면 에러가 발생한다.")
-    public void whenInputShortNicknameThenException() {
-        //given
-        ClientVO shortNicknameClient = newClient;
-        shortNicknameClient.setCnick("1");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(shortNicknameClient)
-        );
-    }
-
-    @Test
-    @DisplayName("회원 가입시 닉네임이 길면 에러가 발생한다.")
-    public void whenInputLongNicknameThenException() {
-        //given
-        ClientVO longNicknameClient = newClient;
-        longNicknameClient.setCnick("1234567890123456");
-
-        //when
-        //then
-        assertThrows(IllegalArgumentException.class, () ->
-            clientService.register(longNicknameClient)
-        );
-    }
-
-//    public void whenJoinDuplicateClientThenThrowException() {
-//        ClientVO newClient;
-//    }
 }
