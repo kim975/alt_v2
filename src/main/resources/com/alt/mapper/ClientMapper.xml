@@ -27,7 +27,7 @@
 	</insert>    
 	
 	<!-- 아이디 삽입 -->
-	<insert id="Roleregister" parameterType="com.alt.domain.ClientAuthVO">
+	<insert id="roleRegister" parameterType="com.alt.domain.ClientAuthVO">
 		insert into alt.clientauth 
 		values (#{cid}, 'ROLE_CLIENT') 
 	</insert>  
