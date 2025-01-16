@@ -1,5 +1,6 @@
 package com.alt.service;
 
+import com.alt.impliment.ClientStore;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,19 +26,19 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientMapper clientMapper;
 
+    @Autowired
+    private ClientStore clientStore;
+
     //회원 추가
     public String register(ClientVO clientVO) {
-        log.info("회원 추가 Service " + clientVO);
-        clientMapper.register(clientVO);
-
+        clientStore.register(clientVO);
         return "register";
-
     }
 
     //권한 추가
     public String Roleregister(ClientAuthVO clientAuthVO) {
         log.info("회원 추가 Service " + clientAuthVO);
-        clientMapper.Roleregister(clientAuthVO);
+        clientMapper.roleRegister(clientAuthVO);
 
         return "Roleregister";
 
