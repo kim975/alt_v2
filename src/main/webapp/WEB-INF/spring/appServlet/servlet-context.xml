@@ -31,7 +31,9 @@
       <beans:property name="prefix" value="/WEB-INF/views/" />
       <beans:property name="suffix" value=".jsp" />
    </beans:bean>
-   
+
+  <beans:bean name="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+
    <!-- 자동으로 빈 생성 설정 (@컨트롤러, @서비스 등등) -->
    <context:component-scan base-package="com.alt.controller"/>
    <context:component-scan base-package="com.alt.doamin"/>
