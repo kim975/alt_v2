@@ -557,7 +557,8 @@ public class BoardControllerTest {
         modifySaleBoardVO.getAttachList().get(0).setSuuid(UUID.randomUUID().toString());
         modifySaleBoardVO.getAttachList().get(1).setSuuid(UUID.randomUUID().toString());
 
-        MvcResult result = mockMvc.perform(post("/board/saleRegister")
+        MvcResult result = mockMvc.perform(post("/board/saleModify")
+                .param("sno", String.valueOf(modifySaleBoardVO.getSno()))
                 .param("vid", modifySaleBoardVO.getVid())
                 .param("pcode", String.valueOf(modifySaleBoardVO.getPcode()))
                 .param("stitle", modifySaleBoardVO.getStitle())
@@ -579,10 +580,7 @@ public class BoardControllerTest {
             .andExpect(flash().attributeExists("result"))
             .andReturn();
 
-        //FlashMap 값 확인
-        Map<String, ?> flashMap = result.getFlashMap();
-
-        Integer registerSno = (Integer) flashMap.get("result");
+        int registerSno = modifySaleBoardVO.getSno();
 
         MvcResult mvcResult = mockMvc.perform(get("/board/saleDetail")
                 .contentType(MediaType.APPLICATION_JSON)
